@@ -41,11 +41,7 @@ class App extends Component {
     this.myInterpreter.run();
   }
   handleStep() {
-    const {
-      code,
-      updateScope,
-      updateOperationType,
-    } = this.props;
+    const { code, updateScope, updateOperationType } = this.props;
     this.markers.forEach(marker => marker.clear());
     this.myInterpreter.step();
     const stack = this.myInterpreter.stateStack[
@@ -57,13 +53,17 @@ class App extends Component {
     updateScope(getScopeProperties(stack.scope));
     updateOperationType(stack.node.type);
 
-    this.markers.push(
-      this.codeMirror.current.editor.doc.markText(
-        getHighlightOffset(start, code),
-        getHighlightOffset(end, code),
-        { css: "background-color: white" }
-      )
-    );
+    try {
+      this.markers.push(
+        this.codeMirror.current.editor.doc.markText(
+          getHighlightOffset(start, code),
+          getHighlightOffset(end, code),
+          { css: "background-color: white" }
+        )
+      );
+    } catch (error) {
+      console.error(error);
+    }
   }
   render() {
     const { code, scope, operationType } = this.props;
@@ -76,7 +76,7 @@ class App extends Component {
       tabSize: 2,
       lintOnChange: false,
       autoCloseBrackets: true,
-      gutters: ["CodeMirror-lint-markers"],
+      gutters: ["CodeMirror-lint-markers"]
     };
     return (
       <Fragment>

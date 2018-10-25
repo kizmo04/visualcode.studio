@@ -275,6 +275,19 @@ Interpreter.prototype.initGlobalScope = function(scope) {
   this.setProperty(scope, 'isFinite',
       this.createNativeFunction(isFinite, false));
 
+  this.polyfills_.push(
+    "(function() {",
+      "var __nativeST__ = window.setTimeout;",
+      "window.setTimeout = function(vCallback, nDelay) {",
+        "var aArgs = Array.prototype.slice.call(arguments, 2);",
+        "console.log('callback!!!!!: ', vCallback instanceof Function)",
+        "return __nativeST__(vCallback instanceof Function ? function() {",
+          "vCallback.apply(null, aArgs);",
+        "} : vCallback, nDelay);",
+      "};",
+    "})()"
+  );
+
   var strFunctions = [
     [escape, 'escape'], [unescape, 'unescape'],
     [decodeURI, 'decodeURI'], [decodeURIComponent, 'decodeURIComponent'],
@@ -1884,6 +1897,9 @@ Interpreter.prototype.pseudoToNative = function(pseudoObj, opt_cycles) {
             this.pseudoToNative(this.getProperty(pseudoObj, i), cycles);
       }
     }
+  // } else if (this.isa(pseudoObj, this.FUNCTION)) { // Function.
+  //   nativeObj = {};
+
   } else {  // Object.
     nativeObj = {};
     cycles.native.push(nativeObj);
@@ -2752,6 +2768,7 @@ Interpreter.prototype['stepCallExpression'] = function(stack, state, node) {
     // Determine value of the function.
     state.doneCallee_ = 2;
     var func = state.value;
+
     if (Array.isArray(func)) {
       state.func_ = this.getValue(func);
       if (func[0] === Interpreter.SCOPE_REFERENCE) {

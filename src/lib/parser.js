@@ -2,26 +2,7 @@ import Interpreter from "./interpreter";
 import _ from "lodash";
 
 export function getInterpreter(code) {
-
   const initFunc = function(interpreter, scope) {
-
-    var wrapper = function(href, callback) {
-      var req = new XMLHttpRequest();
-      req.open("GET", href, true);
-      req.onreadystatechange = function() {
-        if (req.readyState == 4 && req.status == 200) {
-          callback(req.responseText);
-        }
-      };
-      req.send(null);
-    };
-
-    interpreter.setProperty(
-      scope,
-      "getXhr",
-      interpreter.createAsyncFunction(wrapper)
-    );
-
     interpreter.setProperty(
       scope,
       "prompt",
@@ -47,7 +28,15 @@ export function getInterpreter(code) {
     interpreter.setProperty(
       obj,
       "log",
-      interpreter.createNativeFunction((...rest) => console.log(...rest))
+      interpreter.createNativeFunction((...rest) => {
+        const params = rest.map(p => {
+          if (interpreter.isa(p, interpreter.ARRAY)) {
+            return interpreter.pseudoToNative(p);
+          }
+          return p;
+        });
+        return console.log(...params);
+      })
     );
 
     interpreter.setProperty(
@@ -71,15 +60,6 @@ export function getInterpreter(code) {
       obj,
       "dir",
       interpreter.createNativeFunction(obj => console.dir(obj))
-    );
-
-    interpreter.setProperty(
-      scope,
-      "setTimeout",
-      interpreter.createAsyncFunction(function(callback, ms) {
-        var id = window.setTimeout(callback, ms);
-        return id;
-      })
     );
   };
 
