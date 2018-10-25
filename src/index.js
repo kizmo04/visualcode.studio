@@ -10,8 +10,11 @@ import { createBrowserHistory } from "history";
 import {
   ConnectedRouter,
   connectRouter,
-  routerMiddleware
+  routerMiddleware,
 } from "connected-react-router";
+import { JSHINT } from "jshint";
+
+window.JSHINT = JSHINT;
 
 const history = createBrowserHistory();
 export const store = createStore(
