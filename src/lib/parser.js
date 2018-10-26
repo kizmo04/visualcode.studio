@@ -75,6 +75,7 @@ export class InterpreterWrapper extends Interpreter {
     ];
     const start = stack.node.start;
     const end = stack.node.end;
+    console.log(this);
 
     return {
       currentScope: stack.scope,
@@ -98,15 +99,6 @@ export function getHighlightOffset(charOffset, code) {
 
   for (let i = 0; i < code.length + 1; i++) {
     if (i === charOffset) {
-      console.log(
-        `line: ${line} \nch: ${ch -
-          linesLength
-            .slice(0, line)
-            .reduce(
-              (sum, lineLength) => sum + lineLength + 1,
-              0
-            )}\nch origin: ${ch}`
-      );
       return {
         line,
         ch:
@@ -137,8 +129,6 @@ export function getScopeProperties(scope) {
 
   _.forOwn(scope.properties, (value, key) => {
     if (!window.hasOwnProperty(key)) {
-      console.log(scope.properties);
-
       if (value && typeof value === "object") {
         if (key === "this") {
           currentScope[key] = value.parentScope ? "" : "window";
@@ -152,9 +142,11 @@ export function getScopeProperties(scope) {
           currentScope[key] = `${value.properties}`;
         }
       } else {
-        console.log("prop", key, value, typeof value);
         currentScope[key] = `${value}`;
       }
+    } else if (window[key] !== scope.properties[key]) {
+      console.log('in window same key', key, scope.properties[key])
+      // currentScope[key] = value;
     }
   });
 
