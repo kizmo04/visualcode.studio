@@ -10,3 +10,21 @@
   border: 1px solid #eee;
   height: 90vh;
 }
+
+.blinkingBackground {
+  display: inline-block;
+  font-weight: 900;
+  // animation: blink 5s infinite linear;
+}
+
+@keyframes blink {
+  0% {
+    background-color: #2A2A2E;
+  }
+  50% {
+    background-color: hsl(0, 0%, 48%);
+  }
+  100% {
+    background-color: #2A2A2E;
+  }
+}

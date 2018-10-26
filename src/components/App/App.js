@@ -2,10 +2,13 @@ import React, { Component, Fragment } from "react";
 import { Controlled as CodeMirror } from "react-codemirror2";
 import _ from "lodash";
 import {
-  getInterpreter,
-  getHighlightOffset,
   getScopeProperties,
+  initFunc,
+  InterpreterWrapper,
 } from "../../lib/parser";
+import {
+  Highlighter,
+} from "../../lib/editor";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/shadowfox.css";
 import "codemirror/mode/javascript/javascript.js";
@@ -21,52 +24,57 @@ import "./codeMirror.scss";
 class App extends Component {
   constructor(props) {
     super(props);
-    this.myInterpreter = null;
     this.codeMirror = React.createRef();
+    this._interpreter = null;
+    this._codeHighlighter = null;
     this.handleBeforeChange = this.handleBeforeChange.bind(this);
     this.handleRun = this.handleRun.bind(this);
     this.handleStep = this.handleStep.bind(this);
-    this.markers = [];
+    this.id = null;
   }
-  handleBeforeChange(editor, data, codeString) {
+  componentDidMount() {
+    this._codeHighlighter = new Highlighter(this.codeMirror.current.editor);
+  }
+  handleBeforeChange(editor, data, code) {
     const { setChangedCode } = this.props;
-    setChangedCode(codeString);
-    try {
-      this.myInterpreter = getInterpreter(codeString);
-    } catch (error) {
-      console.log(error);
+    setChangedCode(code);
+  }
+  handleRun(e) {
+    const { stopInterpreter, runInterpreter, hasNextStep, isRunning } = this.props;
+    if (!isRunning && hasNextStep) {
+      runInterpreter();
+      this.id = setInterval(() => {
+        this.runInterpreter();
+      }, 0);
+    } else {
+      stopInterpreter();
+      clearInterval(this.id);
     }
   }
-  handleRun() {
-    this.myInterpreter.run();
-  }
   handleStep() {
-    const { code, updateScope, updateOperationType } = this.props;
-    this.markers.forEach(marker => marker.clear());
-    this.myInterpreter.step();
-    const stack = this.myInterpreter.stateStack[
-      this.myInterpreter.stateStack.length - 1
-    ];
-    const start = stack.node.start;
-    const end = stack.node.end;
-
-    updateScope(getScopeProperties(stack.scope));
-    updateOperationType(stack.node.type);
-
+    const { hasNextStep, isRunning } = this.props;
+    if (!isRunning && hasNextStep) {
+      this.runInterpreter();
+    }
+  }
+  runInterpreter() {
+    const { code, stopInterpreter, updateCurrentScope, updateOperationType, decideNextStep, hasNextStep } = this.props;
     try {
-      this.markers.push(
-        this.codeMirror.current.editor.doc.markText(
-          getHighlightOffset(start, code),
-          getHighlightOffset(end, code),
-          { css: "background-color: white" }
-        )
-      );
+      if (!this._interpreter || this._interpreter.code !== code) {
+        this._interpreter = new InterpreterWrapper(code, initFunc);
+      }
+      const { currentScope, operationType, hasNextStep, start, end } = this._interpreter.nextStep();
+      this._codeHighlighter.clear();
+      decideNextStep(hasNextStep);
+      updateCurrentScope(getScopeProperties(currentScope));
+      updateOperationType(operationType);
+      this._codeHighlighter.mark(start, end, code);
     } catch (error) {
       console.error(error);
     }
   }
   render() {
-    const { code, scope, operationType } = this.props;
+    const { code, currentScope, operationType, isRunning } = this.props;
     const options = {
       mode: "javascript",
       theme: "shadowfox",
@@ -98,7 +106,7 @@ class App extends Component {
                     className={`${styles.margin} button is-small is-info`}
                     onClick={this.handleRun}
                   >
-                    Run
+                    {isRunning ? 'Stop' : 'Run'}
                   </div>
                   <div className={`${styles.margin} button is-small is-info`}>
                     Restart
@@ -125,7 +133,7 @@ class App extends Component {
           </div>
           <div className="column is-half">
             <h2>Operation: {operationType}</h2>
-            {_.map(scope, (value, key, i) => (
+            {_.map(currentScope, (value, key, i) => (
               <p>
                 {key}: {value}
               </p>

@@ -1,18 +1,21 @@
 import _ from "lodash";
 import {
   CODE_CHANGED,
-  SCOPE_UPDATED,
+  CURRENT_SCOPE_UPDATED,
   HIGHLIGHT_MARKER_APPENDED,
   NEXT_STEP_DECIDED,
   OPERATION_TYPE_UPDATED,
+  INTERPRETER_RUNNING,
+  INTERPRETER_STOPPED,
 } from "../constants/actionTypes";
 
 const initialState = {
   code: "// enter your code",
-  scope: {},
+  currentScope: {},
   markers: [],
-  couldNextStep: true,
+  hasNextStep: true,
   operationType: "",
+  isRunning: false,
 };
 
 function reducer(state = initialState, action) {
@@ -21,9 +24,9 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, {
         code: action.code
       });
-    case SCOPE_UPDATED:
+    case CURRENT_SCOPE_UPDATED:
       return Object.assign({}, state, {
-        scope: _.assign({}, state.scope, action.scope)
+        currentScope: _.assign({}, state.currentScope, action.currentScope)
       });
     case HIGHLIGHT_MARKER_APPENDED:
       return Object.assign({}, state, {
@@ -31,11 +34,19 @@ function reducer(state = initialState, action) {
       });
     case NEXT_STEP_DECIDED:
       return Object.assign({}, state, {
-        couldNextStep: action.couldNextStep
+        hasNextStep: action.hasNextStep
       });
     case OPERATION_TYPE_UPDATED:
       return Object.assign({}, state, {
         operationType: action.operationType
+      });
+    case INTERPRETER_RUNNING:
+      return Object.assign({}, state, {
+        isRunning: action.isRunning,
+      });
+    case INTERPRETER_STOPPED:
+      return Object.assign({}, state, {
+        isRunning: action.isRunning,
       });
     default:
       return state;

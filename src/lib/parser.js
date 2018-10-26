@@ -1,69 +1,89 @@
 import Interpreter from "./interpreter";
 import _ from "lodash";
 
-export function getInterpreter(code) {
-  const initFunc = function(interpreter, scope) {
-    interpreter.setProperty(
-      scope,
-      "prompt",
-      interpreter.createNativeFunction((...rest) => {
-        var result = window.prompt(...rest);
-        return result;
-      })
-    );
+export const initFunc = function(interpreter, scope) {
+  interpreter.setProperty(
+    scope,
+    "prompt",
+    interpreter.createNativeFunction((...rest) => {
+      var result = window.prompt(...rest);
+      return result;
+    })
+  );
 
-    interpreter.setProperty(
-      scope,
-      "alert",
-      interpreter.createNativeFunction((...rest) => alert(...rest))
-    );
+  interpreter.setProperty(
+    scope,
+    "alert",
+    interpreter.createNativeFunction((...rest) => alert(...rest))
+  );
 
-    const obj = interpreter.createObject(interpreter.OBJECT);
+  const obj = interpreter.createObject(interpreter.OBJECT);
 
-    interpreter.setProperty(
-      scope,
-      "console",
-      interpreter.createObjectProto(obj)
-    );
-    interpreter.setProperty(
-      obj,
-      "log",
-      interpreter.createNativeFunction((...rest) => {
-        const params = rest.map(p => {
-          if (interpreter.isa(p, interpreter.ARRAY)) {
-            return interpreter.pseudoToNative(p);
-          }
-          return p;
-        });
-        return console.log(...params);
-      })
-    );
+  interpreter.setProperty(
+    scope,
+    "console",
+    interpreter.createObjectProto(obj)
+  );
+  interpreter.setProperty(
+    obj,
+    "log",
+    interpreter.createNativeFunction((...rest) => {
+      const params = rest.map(p => {
+        if (interpreter.isa(p, interpreter.ARRAY)) {
+          return interpreter.pseudoToNative(p);
+        }
+        return p;
+      });
+      return console.log(...params);
+    })
+  );
 
-    interpreter.setProperty(
-      obj,
-      "warn",
-      interpreter.createNativeFunction((...rest) => console.warn(...rest))
-    );
+  interpreter.setProperty(
+    obj,
+    "warn",
+    interpreter.createNativeFunction((...rest) => console.warn(...rest))
+  );
 
-    interpreter.setProperty(
-      obj,
-      "clear",
-      interpreter.createNativeFunction(() => console.clear())
-    );
-    interpreter.setProperty(
-      obj,
-      "error",
-      interpreter.createNativeFunction((...rest) => console.error(...rest))
-    );
+  interpreter.setProperty(
+    obj,
+    "clear",
+    interpreter.createNativeFunction(() => console.clear())
+  );
+  interpreter.setProperty(
+    obj,
+    "error",
+    interpreter.createNativeFunction((...rest) => console.error(...rest))
+  );
 
-    interpreter.setProperty(
-      obj,
-      "dir",
-      interpreter.createNativeFunction(obj => console.dir(obj))
-    );
-  };
+  interpreter.setProperty(
+    obj,
+    "dir",
+    interpreter.createNativeFunction(obj => console.dir(obj))
+  );
+};
 
-  return new Interpreter(code, initFunc);
+export class InterpreterWrapper extends Interpreter {
+  constructor(code, initFunc) {
+    super(code, initFunc);
+    this.code = code;
+  }
+
+  nextStep() {
+    const hasNextStep = this.step();
+    const stack = this.stateStack[
+      this.stateStack.length - 1
+    ];
+    const start = stack.node.start;
+    const end = stack.node.end;
+
+    return {
+      currentScope: stack.scope,
+      operationType: stack.node.type,
+      hasNextStep,
+      start,
+      end,
+    };
+  }
 }
 
 export function arrayToString(node) {

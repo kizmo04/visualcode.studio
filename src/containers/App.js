@@ -2,10 +2,12 @@ import { connect } from "react-redux";
 import AppComponent from "../components/App/App";
 import {
   codeChanged,
-  scopeUpdated,
+  currentScopeUpdated,
   highlightMarkerAppended,
   nextStepDecided,
   operationTypeUpdated,
+  interpreterRunning,
+  interpreterStopped,
 } from "../actions";
 
 const mapStateToProps = state => Object.assign({}, state);
@@ -15,17 +17,23 @@ const mapDispatchToProps = dispatch => {
     setChangedCode(code) {
       dispatch(codeChanged(code));
     },
-    updateScope(scope) {
-      dispatch(scopeUpdated(scope));
+    updateCurrentScope(currentScope) {
+      dispatch(currentScopeUpdated(currentScope));
     },
-    decideNextStep(couldNextStep) {
-      dispatch(nextStepDecided(couldNextStep));
+    decideNextStep(hasNextStep) {
+      dispatch(nextStepDecided(hasNextStep));
     },
     appendHighlightMarker() {
       dispatch(highlightMarkerAppended());
     },
     updateOperationType(operationType) {
       dispatch(operationTypeUpdated(operationType));
+    },
+    runInterpreter() {
+      dispatch(interpreterRunning());
+    },
+    stopInterpreter() {
+      dispatch(interpreterStopped());
     }
   };
 };
