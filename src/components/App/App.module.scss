@@ -1,9 +1,9 @@
-.margin {
-  margin-right: 1rem;
+.marginRight {
+  margin: 0 1rem 0 0;
 }
 
-.margin:last-child {
-  margin-right: 0;
+.marginNone {
+  margin: 0;
 }
 
 .codeMirrorSize {
@@ -14,17 +14,4 @@
 .blinkingBackground {
   display: inline-block;
   font-weight: 900;
-  // animation: blink 5s infinite linear;
-}
-
-@keyframes blink {
-  0% {
-    background-color: #2A2A2E;
-  }
-  50% {
-    background-color: hsl(0, 0%, 48%);
-  }
-  100% {
-    background-color: #2A2A2E;
-  }
 }

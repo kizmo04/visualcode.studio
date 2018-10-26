@@ -8,6 +8,8 @@ import {
   operationTypeUpdated,
   interpreterRunning,
   interpreterStopped,
+  runningSpeedChanged,
+  interpreterStateReset,
 } from "../actions";
 
 const mapStateToProps = state => Object.assign({}, state);
@@ -34,6 +36,12 @@ const mapDispatchToProps = dispatch => {
     },
     stopInterpreter() {
       dispatch(interpreterStopped());
+    },
+    changeRunningSpeed(runningSpeed) {
+      dispatch(runningSpeedChanged(runningSpeed));
+    },
+    resetInterpreterState() {
+      dispatch(interpreterStateReset());
     }
   };
 };

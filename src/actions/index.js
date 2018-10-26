@@ -6,6 +6,8 @@ import {
   OPERATION_TYPE_UPDATED,
   INTERPRETER_RUNNING,
   INTERPRETER_STOPPED,
+  RUNNING_SPEED_CHANGED,
+  INTERPRETER_STATE_RESET,
 } from "../constants/actionTypes";
 
 export function codeChanged(code) {
@@ -53,6 +55,23 @@ export function interpreterRunning() {
 export function interpreterStopped() {
   return {
     type: INTERPRETER_STOPPED,
+    isRunning: false,
+  };
+}
+
+export function runningSpeedChanged(runningSpeed) {
+  return {
+    type: RUNNING_SPEED_CHANGED,
+    runningSpeed,
+  };
+}
+
+export function interpreterStateReset() {
+  return {
+    type: INTERPRETER_STATE_RESET,
+    currentScope: {},
+    hasNextStep: true,
+    operationType: "",
     isRunning: false,
   };
 }

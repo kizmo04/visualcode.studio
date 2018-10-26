@@ -7,15 +7,17 @@ import {
   OPERATION_TYPE_UPDATED,
   INTERPRETER_RUNNING,
   INTERPRETER_STOPPED,
+  RUNNING_SPEED_CHANGED,
+  INTERPRETER_STATE_RESET,
 } from "../constants/actionTypes";
 
 const initialState = {
   code: "// enter your code",
   currentScope: {},
-  markers: [],
   hasNextStep: true,
   operationType: "",
   isRunning: false,
+  runningSpeed: 100,
 };
 
 function reducer(state = initialState, action) {
@@ -46,6 +48,17 @@ function reducer(state = initialState, action) {
       });
     case INTERPRETER_STOPPED:
       return Object.assign({}, state, {
+        isRunning: action.isRunning,
+      });
+    case RUNNING_SPEED_CHANGED:
+      return Object.assign({}, state, {
+        runningSpeed: action.runningSpeed,
+      });
+    case INTERPRETER_STATE_RESET:
+      return Object.assign({}, state, {
+        currentScope: action.currentScope,
+        hasNextStep: action.hasNextStep,
+        operationType: action.operationType,
         isRunning: action.isRunning,
       });
     default:

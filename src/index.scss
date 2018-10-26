@@ -1,7 +1,12 @@
 $breadcrumb-item-separator-color: transparent;
 
 @import "bulma";
+@import "../node_modules/bulma-slider/src/sass/index.sass";
 
 #root {
   padding-top: 0;
+}
+
+input[type=range].slider.is-fullwidth.is-info {
+  margin: 0 1rem 0 0;
 }

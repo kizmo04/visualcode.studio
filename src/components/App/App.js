@@ -30,6 +30,8 @@ class App extends Component {
     this.handleBeforeChange = this.handleBeforeChange.bind(this);
     this.handleRun = this.handleRun.bind(this);
     this.handleStep = this.handleStep.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleRestart = this.handleRestart.bind(this);
     this.id = null;
   }
   componentDidMount() {
@@ -40,12 +42,12 @@ class App extends Component {
     setChangedCode(code);
   }
   handleRun(e) {
-    const { stopInterpreter, runInterpreter, hasNextStep, isRunning } = this.props;
+    const { stopInterpreter, runInterpreter, hasNextStep, isRunning, runningSpeed } = this.props;
     if (!isRunning && hasNextStep) {
       runInterpreter();
       this.id = setInterval(() => {
         this.runInterpreter();
-      }, 0);
+      }, 2000 * runningSpeed / 100);
     } else {
       stopInterpreter();
       clearInterval(this.id);
@@ -73,6 +75,15 @@ class App extends Component {
       console.error(error);
     }
   }
+  handleChange(e) {
+    const { changeRunningSpeed } = this.props;
+    changeRunningSpeed(e.target.value);
+  }
+  handleRestart() {
+    const { code, resetInterpreterState } = this.props;
+    this._interpreter = new InterpreterWrapper(code, initFunc);
+    resetInterpreterState();
+  }
   render() {
     const { code, currentScope, operationType, isRunning } = this.props;
     const options = {
@@ -97,18 +108,19 @@ class App extends Component {
               <div className="navbar-item">
                 <div className="field is-grouped">
                   <div
-                    className={`${styles.margin} button is-small is-info`}
+                    className={`${styles.marginRight} button is-small is-info`}
                     onClick={this.handleStep}
                   >
                     Next Step
                   </div>
                   <div
-                    className={`${styles.margin} button is-small is-info`}
+                    className={`${styles.marginRight} button is-small is-info`}
                     onClick={this.handleRun}
                   >
                     {isRunning ? 'Stop' : 'Run'}
                   </div>
-                  <div className={`${styles.margin} button is-small is-info`}>
+                  <input className={`${styles.marginRight} slider is-fullwidth is-info`} step="1" min="0" max="100" defaultValue="50" type="range" onChange={this.handleChange}></input>
+                  <div className={`${styles.marginNone} button is-small is-info`} onClick={this.handleRestart}>
                     Restart
                   </div>
                 </div>
