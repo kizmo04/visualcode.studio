@@ -8,6 +8,7 @@ import {
   INTERPRETER_STOPPED,
   RUNNING_SPEED_CHANGED,
   INTERPRETER_STATE_RESET,
+  PARENT_SCOPE_UPDATED,
 } from "../constants/actionTypes";
 
 export function codeChanged(code) {
@@ -21,6 +22,13 @@ export function currentScopeUpdated(currentScope) {
   return {
     type: CURRENT_SCOPE_UPDATED,
     currentScope,
+  };
+}
+
+export function parentScopeUpdated(parentScope) {
+  return {
+    type: PARENT_SCOPE_UPDATED,
+    parentScope,
   };
 }
 

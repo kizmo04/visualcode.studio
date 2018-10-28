@@ -6,9 +6,7 @@ import {
   initFunc,
   InterpreterWrapper,
 } from "../../lib/parser";
-import {
-  Highlighter,
-} from "../../lib/editor";
+import { Highlighter } from "../../lib/editor";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/shadowfox.css";
 import "codemirror/mode/javascript/javascript.js";
@@ -20,6 +18,7 @@ import "codemirror/addon/edit/matchbrackets.js";
 import "codemirror/addon/edit/closebrackets.js";
 import styles from "./App.module.scss";
 import "./codeMirror.scss";
+import PtsCanvas from "../PtsCanvas/PtsCanvas";
 
 class App extends Component {
   constructor(props) {
@@ -42,12 +41,18 @@ class App extends Component {
     setChangedCode(code);
   }
   handleRun(e) {
-    const { stopInterpreter, runInterpreter, hasNextStep, isRunning, runningSpeed } = this.props;
+    const {
+      stopInterpreter,
+      runInterpreter,
+      hasNextStep,
+      isRunning,
+      runningSpeed,
+    } = this.props;
     if (!isRunning && hasNextStep) {
       runInterpreter();
       this.id = setInterval(() => {
         this.runInterpreter();
-      }, 2000 * runningSpeed / 100);
+      }, (2000 * runningSpeed) / 100);
     } else {
       stopInterpreter();
       clearInterval(this.id);
@@ -60,15 +65,28 @@ class App extends Component {
     }
   }
   runInterpreter() {
-    const { code, stopInterpreter, updateCurrentScope, updateOperationType, decideNextStep, hasNextStep } = this.props;
+    const {
+      code,
+      updateCurrentScope,
+      updateOperationType,
+      decideNextStep,
+    } = this.props;
     try {
       if (!this._interpreter || this._interpreter.code !== code) {
         this._interpreter = new InterpreterWrapper(code, initFunc);
       }
-      const { currentScope, operationType, hasNextStep, start, end } = this._interpreter.nextStep();
+      const {
+        parent,
+        currentScope,
+        operationType,
+        hasNextStep,
+        start,
+        end
+      } = this._interpreter.nextStep();
       this._codeHighlighter.clear();
       decideNextStep(hasNextStep);
       updateCurrentScope(getScopeProperties(currentScope));
+      if (parent) getScopeProperties(parent);
       updateOperationType(operationType);
       this._codeHighlighter.mark(start, end, code);
     } catch (error) {
@@ -85,7 +103,13 @@ class App extends Component {
     resetInterpreterState();
   }
   render() {
-    const { code, currentScope, operationType, isRunning } = this.props;
+    const {
+      scopeHistory,
+      code,
+      currentScope,
+      operationType,
+      isRunning,
+    } = this.props;
     const options = {
       mode: "javascript",
       theme: "shadowfox",
@@ -95,8 +119,11 @@ class App extends Component {
       tabSize: 2,
       lintOnChange: false,
       autoCloseBrackets: true,
-      gutters: ["CodeMirror-lint-markers"]
+      gutters: ["CodeMirror-lint-markers"],
     };
+    let scopePropertiesToDraw = _.map(currentScope, (value, name) => {
+      return typeof value === "string" ? value.charCodeAt(0) : parseInt(value);
+    });
     return (
       <Fragment>
         <nav className="navbar">
@@ -117,10 +144,23 @@ class App extends Component {
                     className={`${styles.marginRight} button is-small is-info`}
                     onClick={this.handleRun}
                   >
-                    {isRunning ? 'Stop' : 'Run'}
+                    {isRunning ? "Stop" : "Run"}
                   </div>
-                  <input className={`${styles.marginRight} slider is-fullwidth is-info`} step="1" min="0" max="100" defaultValue="50" type="range" onChange={this.handleChange}></input>
-                  <div className={`${styles.marginNone} button is-small is-info`} onClick={this.handleRestart}>
+                  <input
+                    className={`${
+                      styles.marginRight
+                    } slider is-fullwidth is-info`}
+                    step="1"
+                    min="0"
+                    max="100"
+                    defaultValue="50"
+                    type="range"
+                    onChange={this.handleChange}
+                  />
+                  <div
+                    className={`${styles.marginNone} button is-small is-info`}
+                    onClick={this.handleRestart}
+                  >
                     Restart
                   </div>
                 </div>
@@ -144,12 +184,17 @@ class App extends Component {
             />
           </div>
           <div className="column is-half">
+            <PtsCanvas points={scopePropertiesToDraw} />
             <h2>Operation: {operationType}</h2>
-            {_.map(currentScope, (value, key, i) => (
-              <p>
-                {key}: {value}
-              </p>
-            ))}
+            {_.map([...scopeHistory, currentScope], (scope, index) =>
+              _.map(scope, (value, key) => {
+                if (key === "scopeName") {
+                  return <h2>{value} Closure</h2>;
+                } else {
+                  return <p>{`${key}: ${value}`}</p>;
+                }
+              })
+            )}
           </div>
         </div>
       </Fragment>
