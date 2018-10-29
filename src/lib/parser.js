@@ -330,7 +330,7 @@ export class InterpreterWrapper extends Interpreter {
     const start = currentState.node.start;
     const end = currentState.node.end;
 
-    if (currentState["func_"]) {
+    if (currentState.func_) {
       const { name } = currentState.func_.node.id;
       this.scopeNames.push(name);
       return;
@@ -399,25 +399,49 @@ export function getScopeProperties(scope) {
       currentScope[key] = value;
       if (value && typeof value === "object") {
         if (key === "this") {
-          currentScope[key] = value.parentScope ? "" : "window";
+          currentScope[key] = {
+            type: 'Object',
+            value: value.parentScope ? "" : "window"
+          };
         } else if (key === "arguments") {
-          currentScope[key] = `${value.properties[0]}`;
+          currentScope[key] = {
+            type: 'ArrayLike',
+            value: `${value.properties[0]}`
+          };
         } else if (value.class === "Array") {
-          currentScope[key] = arrayToString(value);
+          currentScope[key] = {
+            type: 'Array',
+            value: arrayToString(value)
+          };
         } else if (value.class === "Function") {
-          currentScope[key] = value.class;
+          currentScope[key] = {
+            type: 'Function',
+            value: value.class
+          };
         } else {
-          currentScope[key] = `${value.properties}`;
+          currentScope[key] = {
+            type: typeof value.properties,
+            value: `${value.properties}`
+          };
         }
       } else {
-        currentScope[key] = `${value}`;
+        currentScope[key] = {
+          type: typeof value,
+          value: `${value}`
+        };
       }
     }
   });
 
   if (scope.scopeName === "Global") {
-    currentScope["window"] = "global Object";
-    currentScope["this"] = "window";
+    currentScope.window = {
+      value: "global Object",
+      type: "string"
+    };
+    currentScope.this = {
+      value: "window",
+      type: "string"
+    };
   }
 
   return currentScope;

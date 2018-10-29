@@ -37,14 +37,15 @@ function reducer(state = initialState, action) {
         code: action.code,
       });
     case CURRENT_SCOPE_UPDATED:
-      if (state.currentScope.scopeName === action.currentScope.scopeName) {
+      if (state.currentScope.scopeName && state.currentScope.scopeName.value === action.currentScope.scopeName.value) {
         return Object.assign({}, state, {
           currentScope: _.assign({}, state.currentScope, action.currentScope),
         });
       } else if (
         state.scopeHistory.length &&
-        state.scopeHistory[state.scopeHistory.length - 1].scopeName ===
-          action.currentScope.scopeName
+        state.scopeHistory[state.scopeHistory.length - 1].scopeName &&
+        state.scopeHistory[state.scopeHistory.length - 1].scopeName.value ===
+          action.currentScope.scopeName.value
       ) {
         newScopeHistory.pop();
         return Object.assign({}, state, {
