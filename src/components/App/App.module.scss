@@ -1,15 +1,3 @@
-.marginRight {
-  margin: 0 1rem 0 0;
-}
-
-.marginNone {
-  margin: 0;
-}
-
-.paddingNone {
-  padding: 0;
-}
-
 .codeMirrorSize {
   // border: 1px solid #eee;
   height: 70vh;
@@ -19,13 +7,4 @@
 .blinkingBackground {
   display: inline-block;
   font-weight: 900;
-}
-
-.backgroundTransparent {
-  background-color: transparent;
-}
-
-.logBox {
-  margin-left: 40px;
-  overflow: scroll;
 }
