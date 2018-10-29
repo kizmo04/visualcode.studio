@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import { Route, Switch } from "react-router-dom";
 import { Controlled as CodeMirror } from "react-codemirror2";
 import _ from "lodash";
 import {
@@ -7,6 +8,7 @@ import {
   InterpreterWrapper,
 } from "../../lib/parser";
 import { Highlighter } from "../../lib/editor";
+import { setCodeUptream, getCodeUpstream } from "../../lib/firebase";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/shadowfox.css";
 import "codemirror/mode/javascript/javascript.js";
@@ -32,9 +34,14 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleRestart = this.handleRestart.bind(this);
     this.id = null;
+    this.handleShare = this.handleShare.bind(this);
   }
   componentDidMount() {
     this._codeHighlighter = new Highlighter(this.codeMirror.current.editor);
+  }
+  handleShare () {
+    const { code, getSharedCodeId } = this.props;
+    setCodeUptream(code, getSharedCodeId);
   }
   handleBeforeChange(editor, data, code) {
     const { setChangedCode } = this.props;
@@ -116,6 +123,7 @@ class App extends Component {
       currentScope,
       operationType,
       isRunning,
+      setChangedCode,
     } = this.props;
     const options = {
       mode: "javascript",
@@ -178,20 +186,34 @@ class App extends Component {
             </div>
             <div className="navbar-end">
               <div className="navbar-item">
-                <div className="button is-info is-small">Share</div>
+                <div className="button is-info is-small" onClick={this.handleShare}>Share</div>
               </div>
             </div>
           </div>
         </nav>
         <div className="columns is-multiline">
           <div className="column is-half">
-            <CodeMirror
-              ref={this.codeMirror}
-              className={styles.codeMirrorSize}
-              options={options}
-              onBeforeChange={this.handleBeforeChange}
-              value={code}
-            />
+            <Switch>
+              <Route exact path="/" render={() => {
+                return  <CodeMirror
+                ref={this.codeMirror}
+                className={styles.codeMirrorSize}
+                options={options}
+                onBeforeChange={this.handleBeforeChange}
+                value={code}
+              />;
+              }} />
+              <Route path="/:code_id" render={({ match }) => {
+                getCodeUpstream(match.params.code_id, setChangedCode);
+                return <CodeMirror
+                ref={this.codeMirror}
+                className={styles.codeMirrorSize}
+                options={options}
+                onBeforeChange={this.handleBeforeChange}
+                value={code}
+              />;
+              }} />
+          </Switch>
             <div className={`${styles.logBox}`}>
               <h2 className="subtitle has-text-success is-small">Operation: {operationType}</h2>
               {_.map([...scopeHistory, currentScope], (scope, index) =>

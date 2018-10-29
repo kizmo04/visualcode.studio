@@ -9,6 +9,7 @@ import {
   RUNNING_SPEED_CHANGED,
   INTERPRETER_STATE_RESET,
   PARENT_SCOPE_UPDATED,
+  CODE_SHARED,
 } from "../constants/actionTypes";
 
 export function codeChanged(code) {
@@ -81,5 +82,12 @@ export function interpreterStateReset() {
     hasNextStep: true,
     operationType: "",
     isRunning: false,
+  };
+}
+
+export function codeShared(sharedCodeId) {
+  return {
+    type: CODE_SHARED,
+    sharedCodeId,
   };
 }

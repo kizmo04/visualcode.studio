@@ -10,6 +10,7 @@ import {
   RUNNING_SPEED_CHANGED,
   INTERPRETER_STATE_RESET,
   PARENT_SCOPE_UPDATED,
+  CODE_SHARED,
 } from "../constants/actionTypes";
 
 const initialState = {
@@ -20,12 +21,17 @@ const initialState = {
   operationType: "",
   isRunning: false,
   runningSpeed: 100,
+  sharedCodeId: "",
 };
 
 function reducer(state = initialState, action) {
   const newScopeHistory = _.cloneDeep(state.scopeHistory);
   const newCurrentScope = _.cloneDeep(state.currentScope);
   switch (action.type) {
+    case CODE_SHARED:
+      return Object.assign({}, state, {
+        sharedCodeId: action.sharedCodeId,
+      });
     case CODE_CHANGED:
       return Object.assign({}, state, {
         code: action.code,

@@ -10,12 +10,16 @@ import {
   interpreterStopped,
   runningSpeedChanged,
   interpreterStateReset,
+  codeShared,
 } from "../actions";
 
 const mapStateToProps = state => Object.assign({}, state);
 
 const mapDispatchToProps = dispatch => {
   return {
+    getSharedCodeId(sharedCodeId) {
+      dispatch(codeShared(sharedCodeId));
+    },
     setChangedCode(code) {
       dispatch(codeChanged(code));
     },
