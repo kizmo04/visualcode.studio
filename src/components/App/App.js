@@ -70,6 +70,8 @@ class App extends Component {
       updateCurrentScope,
       updateOperationType,
       decideNextStep,
+      stopInterpreter,
+      isRunning,
     } = this.props;
     try {
       if (!this._interpreter || this._interpreter.code !== code) {
@@ -83,6 +85,10 @@ class App extends Component {
         start,
         end
       } = this._interpreter.nextStep();
+      if (isRunning && !hasNextStep) {
+        stopInterpreter();
+        clearInterval(this.id);
+      }
       this._codeHighlighter.clear();
       decideNextStep(hasNextStep);
       updateCurrentScope(getScopeProperties(currentScope));
@@ -124,6 +130,8 @@ class App extends Component {
     let scopePropertiesToDraw = _.map(currentScope, (value, name) => {
       return typeof value === "string" ? value.charCodeAt(0) : parseInt(value);
     });
+
+    console.log('to draw', scopePropertiesToDraw)
     return (
       <Fragment>
         <nav className="navbar">
@@ -184,7 +192,7 @@ class App extends Component {
             />
           </div>
           <div className="column is-half">
-            <PtsCanvas points={scopePropertiesToDraw} />
+            <PtsCanvas scopes={scopePropertiesToDraw} />
             <h2>Operation: {operationType}</h2>
             {_.map([...scopeHistory, currentScope], (scope, index) =>
               _.map(scope, (value, key) => {
