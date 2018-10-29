@@ -145,9 +145,14 @@ class App extends Component {
       return typeof value === "string" ? value.charCodeAt(0) : parseInt(value);
     });
 
+    // console.log(scopeHistory);
     return (
       <Fragment>
-        <PtsCanvas className="pts-canvas" scopes={scopePropertiesToDraw} />
+        {
+          Object.values(currentScope).map((key, index) => (
+            <PtsCanvas className="pts-canvas" key={index} variable={key} operationType={operationType} />
+          ))
+        }
         <NavBar
           isRunning={isRunning}
           hasNextStep={hasNextStep}
@@ -194,11 +199,11 @@ class App extends Component {
                 }}
               />
             </Switch>
-            <ScopeInfo
+            {/* <ScopeInfo
               scopeHistory={scopeHistory}
               currentScope={currentScope}
               operationType={operationType}
-            />
+            /> */}
           </div>
         </div>
       </Fragment>
