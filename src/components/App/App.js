@@ -106,6 +106,7 @@ class App extends Component {
   handleRestart() {
     const { code, resetInterpreterState } = this.props;
     this._interpreter = new InterpreterWrapper(code, initFunc);
+    this._codeHighlighter.clear();
     resetInterpreterState();
   }
   render() {
