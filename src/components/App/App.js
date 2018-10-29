@@ -135,7 +135,8 @@ class App extends Component {
     console.log('to draw', scopePropertiesToDraw)
     return (
       <Fragment>
-        <nav className="navbar">
+        <PtsCanvas className="pts-canvas" scopes={scopePropertiesToDraw} />
+        <nav className={`${styles.backgroundTransparent} navbar`}>
           <div className="navbar-brand">
             <div className="navbar-item">See JS</div>
           </div>
@@ -191,19 +192,22 @@ class App extends Component {
               onBeforeChange={this.handleBeforeChange}
               value={code}
             />
+            <div className={`${styles.logBox}`}>
+              <h2 className="subtitle has-text-success is-small">Operation: {operationType}</h2>
+              {_.map([...scopeHistory, currentScope], (scope, index) =>
+                _.map(scope, (value, key) => {
+                  if (key === "scopeName") {
+                    return <h2 className="subtitle has-text-success is-small">{value} Closure</h2>;
+                  } else {
+                    return <p className="subtitle has-text-success is-small">{`${key}: ${value}`}</p>;
+                  }
+                })
+                )}
+            </div>
           </div>
           <div className="column is-half">
-            <PtsCanvas scopes={scopePropertiesToDraw} />
-            <h2>Operation: {operationType}</h2>
-            {_.map([...scopeHistory, currentScope], (scope, index) =>
-              _.map(scope, (value, key) => {
-                if (key === "scopeName") {
-                  return <h2>{value} Closure</h2>;
-                } else {
-                  return <p>{`${key}: ${value}`}</p>;
-                }
-              })
-            )}
+          </div>
+          <div className="column is-fullwidth">
           </div>
         </div>
       </Fragment>
