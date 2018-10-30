@@ -2,7 +2,6 @@ import _ from "lodash";
 import {
   CODE_CHANGED,
   CURRENT_SCOPE_UPDATED,
-  HIGHLIGHT_MARKER_APPENDED,
   NEXT_STEP_DECIDED,
   OPERATION_TYPE_UPDATED,
   INTERPRETER_RUNNING,
@@ -13,7 +12,7 @@ import {
   CODE_SHARED,
 } from "../constants/actionTypes";
 
-const initialState = {
+export const initialState = {
   code: "// enter your code",
   scopeHistory: [],
   currentScope: {},
@@ -37,45 +36,25 @@ function reducer(state = initialState, action) {
         code: action.code,
       });
     case CURRENT_SCOPE_UPDATED:
-      if (state.currentScope.scopeName && state.currentScope.scopeName.value === action.currentScope.scopeName.value) {
+      if (!state.currentScope.scopeName || state.currentScope.scopeName.value === action.currentScope.scopeName.value) {
         return Object.assign({}, state, {
           currentScope: _.assign({}, state.currentScope, action.currentScope),
         });
       } else if (
-        state.scopeHistory.length &&
-        state.scopeHistory[state.scopeHistory.length - 1].scopeName &&
-        state.scopeHistory[state.scopeHistory.length - 1].scopeName.value ===
+        state.scopeHistory.length && state.scopeHistory[state.scopeHistory.length - 1].scopeName.value ===
           action.currentScope.scopeName.value
       ) {
         newScopeHistory.pop();
         return Object.assign({}, state, {
           scopeHistory: [...newScopeHistory],
-          currentScope: action.currentScope,
+          currentScope: _.assign({}, state.currentScope, action.currentScope),
         });
       } else {
         return Object.assign({}, state, {
           scopeHistory: [...state.scopeHistory, newCurrentScope],
-          currentScope: action.currentScope,
+          currentScope: _.assign({}, state.currentScope, action.currentScope),
         });
       }
-    case PARENT_SCOPE_UPDATED:
-      const scopeProperties = _.map(state.scopeHistory, (scope, index) =>
-        Object.keys(scope)
-      );
-      _.forOwn(action.parentScope, (value, key) => {
-        for (let i = 0; i < scopeProperties.length; i++) {
-          if (scopeProperties[i].includes(key)) {
-            newScopeHistory[i][key] = value;
-          }
-        }
-      });
-      return Object.assign({}, state, {
-        scopeHistory: newScopeHistory,
-      });
-    case HIGHLIGHT_MARKER_APPENDED:
-      return Object.assign({}, state, {
-        markers: action.markers,
-      });
     case NEXT_STEP_DECIDED:
       return Object.assign({}, state, {
         hasNextStep: action.hasNextStep,

@@ -27,7 +27,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test \"--coverage\"",
+    "test:debug": "react-scripts --inspect-brk test --runInBand",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -40,6 +41,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "deep-freeze": "0.0.1",
     "redux-logger": "^3.0.6"
   }
 }
