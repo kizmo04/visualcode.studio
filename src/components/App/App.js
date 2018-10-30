@@ -199,12 +199,12 @@ class App extends Component {
                 }}
               />
             </Switch>
-            {/* <ScopeInfo
+          </div>
+            <ScopeInfo
               scopeHistory={scopeHistory}
               currentScope={currentScope}
               operationType={operationType}
-            /> */}
-          </div>
+            />
         </div>
       </Fragment>
     );
