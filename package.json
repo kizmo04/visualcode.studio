@@ -43,6 +43,8 @@
     "deep-freeze": "0.0.1",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.6.0",
+    "jsdom": "13.0.0",
+    "jsdom-global": "3.0.2",
     "react-test-renderer": "^16.6.0",
     "redux-logger": "^3.0.6"
   }

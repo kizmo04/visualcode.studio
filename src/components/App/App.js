@@ -158,12 +158,11 @@ class App extends Component {
           hasNextStep={hasNextStep}
           runningSpeed={runningSpeed}
           code={code}
-          handleReset={this.handleReset}
-          handleStep={this.handleStep}
-          handleShare={this.handleShare}
-          handleRestart={this.handleRestart}
-          handleRun={this.handleRun}
-          handleChange={this.handleChange}
+          onStepButtonClick={this.handleStep}
+          onShareButtonClick={this.handleShare}
+          onRestartButtonClick={this.handleRestart}
+          onRunButtonClick={this.handleRun}
+          onRunningSpeedChange={this.handleChange}
         />
         <div className="columns is-multiline">
           <div className="column is-half">

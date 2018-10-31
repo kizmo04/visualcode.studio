@@ -7,11 +7,10 @@ class NavBar extends Component {
     this.handleInputRangeChange = this.handleInputRangeChange.bind(this);
   }
   handleInputRangeChange (e) {
-    const { handleChange } = this.props;
-    handleChange(e.target.value);
+    this.props.onRunningSpeedChange(e.target.value);
   }
   render() {
-    const { isRunning, handleStep, handleRun, handleChange, handleRestart, handleShare } = this.props;
+    const { isRunning, onStepButtonClick, onRunButtonClick, onRestartButtonClick, onShareButtonClick } = this.props;
     return (
       <nav className={`${styles.backgroundTransparent} navbar`}>
         <div className="navbar-brand">
@@ -22,21 +21,21 @@ class NavBar extends Component {
             <div className="navbar-item">
               <div className="field is-grouped">
                 <div
-                  className={`${styles.marginRight} button is-small is-info`}
-                  onClick={handleStep}
+                  className={`${styles.marginRight} button is-small is-info step-button`}
+                  onClick={onStepButtonClick}
                 >
                   Next Step
                 </div>
                 <div
-                  className={`${styles.marginRight} button is-small is-info`}
-                  onClick={handleRun}
+                  className={`${styles.marginRight} button is-small is-info run-button`}
+                  onClick={onRunButtonClick}
                 >
                   {isRunning ? "Stop" : "Run"}
                 </div>
                 <input
                   className={`${
                     styles.marginRight
-                  } slider is-fullwidth is-info`}
+                  } slider is-fullwidth is-info running-speed-slider`}
                   step="1"
                   min="0"
                   max="100"
@@ -45,8 +44,8 @@ class NavBar extends Component {
                   onChange={this.handleInputRangeChange}
                 />
                 <div
-                  className={`${styles.marginNone} button is-small is-info`}
-                  onClick={handleRestart}
+                  className={`${styles.marginNone} button is-small is-info restart-button`}
+                  onClick={onRestartButtonClick}
                 >
                   Restart
                 </div>
@@ -56,8 +55,8 @@ class NavBar extends Component {
           <div className="navbar-end">
             <div className="navbar-item">
               <div
-                className="button is-info is-small"
-                onClick={handleShare}
+                className="button is-info is-small share-button"
+                onClick={onShareButtonClick}
               >
                 Share
               </div>
