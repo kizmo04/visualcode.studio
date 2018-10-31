@@ -22,7 +22,7 @@ export const initialState = {
   sharedCodeId: "",
 };
 
-function reducer(state = initialState, action) {
+const reducer = (state = initialState, action) => {
   const newScopeHistory = _.cloneDeep(state.scopeHistory);
   const newCurrentScope = _.cloneDeep(state.currentScope);
   switch (action.type) {
@@ -84,6 +84,6 @@ function reducer(state = initialState, action) {
     default:
       return state;
   }
-}
+};
 
 export default reducer;

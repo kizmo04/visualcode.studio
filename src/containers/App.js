@@ -15,40 +15,38 @@ import {
 
 const mapStateToProps = state => Object.assign({}, state);
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getSharedCodeId(sharedCodeId) {
-      dispatch(codeShared(sharedCodeId));
-    },
-    setChangedCode(code) {
-      dispatch(codeChanged(code));
-    },
-    updateCurrentScope(currentScope) {
-      dispatch(currentScopeUpdated(currentScope));
-    },
-    decideNextStep(hasNextStep) {
-      dispatch(nextStepDecided(hasNextStep));
-    },
-    appendHighlightMarker() {
-      dispatch(highlightMarkerAppended());
-    },
-    updateOperationType(operationType) {
-      dispatch(operationTypeUpdated(operationType));
-    },
-    runInterpreter() {
-      dispatch(interpreterRunning());
-    },
-    stopInterpreter() {
-      dispatch(interpreterStopped());
-    },
-    changeRunningSpeed(runningSpeed) {
-      dispatch(runningSpeedChanged(runningSpeed));
-    },
-    resetInterpreterState() {
-      dispatch(interpreterStateReset());
-    }
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  getSharedCodeId(sharedCodeId) {
+    dispatch(codeShared(sharedCodeId));
+  },
+  setChangedCode(code) {
+    dispatch(codeChanged(code));
+  },
+  updateCurrentScope(currentScope) {
+    dispatch(currentScopeUpdated(currentScope));
+  },
+  decideNextStep(hasNextStep) {
+    dispatch(nextStepDecided(hasNextStep));
+  },
+  appendHighlightMarker() {
+    dispatch(highlightMarkerAppended());
+  },
+  updateOperationType(operationType) {
+    dispatch(operationTypeUpdated(operationType));
+  },
+  runInterpreter() {
+    dispatch(interpreterRunning());
+  },
+  stopInterpreter() {
+    dispatch(interpreterStopped());
+  },
+  changeRunningSpeed(runningSpeed) {
+    dispatch(runningSpeedChanged(runningSpeed));
+  },
+  resetInterpreterState() {
+    dispatch(interpreterStateReset());
+  }
+});
 
 export default connect(
   mapStateToProps,

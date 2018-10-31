@@ -12,82 +12,82 @@ import {
   CODE_SHARED,
 } from "../constants/actionTypes";
 
-export function codeChanged(code) {
-  return {
+export const codeChanged = code => (
+  {
     type: CODE_CHANGED,
     code,
-  };
-}
+  }
+);
 
-export function currentScopeUpdated(currentScope) {
-  return {
+export const currentScopeUpdated = currentScope => (
+  {
     type: CURRENT_SCOPE_UPDATED,
     currentScope,
-  };
-}
+  }
+);
 
-export function parentScopeUpdated(parentScope) {
-  return {
+export const parentScopeUpdated = parentScope => (
+  {
     type: PARENT_SCOPE_UPDATED,
     parentScope,
-  };
-}
+  }
+);
 
-export function highlightMarkerAppended(markers) {
-  return {
+export const highlightMarkerAppended = markers => (
+  {
     type: HIGHLIGHT_MARKER_APPENDED,
     markers,
-  };
-}
+  }
+);
 
-export function nextStepDecided(hasNextStep) {
-  return {
+export const nextStepDecided = hasNextStep => (
+  {
     type: NEXT_STEP_DECIDED,
     hasNextStep,
-  };
-}
+  }
+);
 
-export function operationTypeUpdated(operationType) {
-  return {
+export const operationTypeUpdated = operationType => (
+  {
     type: OPERATION_TYPE_UPDATED,
     operationType,
-  };
-}
+  }
+);
 
-export function interpreterRunning() {
-  return {
+export const interpreterRunning = () => (
+  {
     type: INTERPRETER_RUNNING,
     isRunning: true,
-  };
-}
+  }
+);
 
-export function interpreterStopped() {
-  return {
+export const interpreterStopped = () => (
+  {
     type: INTERPRETER_STOPPED,
     isRunning: false,
-  };
-}
+  }
+);
 
-export function runningSpeedChanged(runningSpeed) {
-  return {
+export const runningSpeedChanged = runningSpeed => (
+  {
     type: RUNNING_SPEED_CHANGED,
     runningSpeed,
-  };
-}
+  }
+);
 
-export function interpreterStateReset() {
-  return {
+export const interpreterStateReset = () => (
+  {
     type: INTERPRETER_STATE_RESET,
     currentScope: {},
     hasNextStep: true,
     operationType: "",
     isRunning: false,
-  };
-}
+  }
+);
 
-export function codeShared(sharedCodeId) {
-  return {
+export const codeShared = sharedCodeId => (
+  {
     type: CODE_SHARED,
     sharedCodeId,
-  };
-}
+  }
+);
