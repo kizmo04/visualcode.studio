@@ -8,7 +8,6 @@ import {
   INTERPRETER_STOPPED,
   RUNNING_SPEED_CHANGED,
   INTERPRETER_STATE_RESET,
-  PARENT_SCOPE_UPDATED,
   CODE_SHARED,
 } from "../constants/actionTypes";
 
