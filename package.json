@@ -14,7 +14,6 @@
     "jshint": "^2.9.6",
     "lodash": "^4.17.11",
     "node-sass": "^4.9.4",
-    "p5": "^0.7.2",
     "pts": "^0.6.6",
     "react": "^16.5.2",
     "react-codemirror2": "^5.1.0",
@@ -27,7 +26,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --watch --env=node",
+    "test": "react-scripts test --watch --coverage --env=node",
     "test:debug": "react-scripts --inspect-brk test --runInBand",
     "eject": "react-scripts eject"
   },

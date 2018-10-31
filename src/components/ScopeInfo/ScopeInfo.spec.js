@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow, mount, render } from 'enzyme';
+import { shallow } from 'enzyme';
 import ScopeInfo from "./ScopeInfo";
 
 
@@ -17,7 +17,8 @@ describe("ScopeInfo", () => {
         scopeHistory={props.scopeHistory}
         currentScope={props.currentScope}
         operationType={props.operationType}
-      />);
+      />
+    );
 
     return {
       props,
@@ -52,11 +53,22 @@ describe("ScopeInfo", () => {
       operationType: "Program"
     };
 
+    const { component } = setup(firstProp);
+
     it("renders scope name", () => {
-      const { component } = setup(firstProp);
 
       expect(component).toMatchSnapshot();
-      expect(component.find('.closure')).to.have.lengthOf(1);
+      expect(component.find(".closure").text()).toContain("Global");
+    });
+
+    it("renders scope properties", () => {
+
+      expect(component.find(".property").length).toBe(2);
+    });
+
+    it("renders operation type", () => {
+
+      expect(component.find(".operation-type").text()).toBe("Program")
     });
   });
 });
