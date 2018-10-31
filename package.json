@@ -24,7 +24,7 @@
     "redux": "^4.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "NODE_ENV=development react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --watch --coverage --env=node",
     "test:debug": "react-scripts --inspect-brk test --runInBand",
