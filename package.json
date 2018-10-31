@@ -27,7 +27,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test \"--coverage\"",
+    "test": "react-scripts test --watch --env=node",
     "test:debug": "react-scripts --inspect-brk test --runInBand",
     "eject": "react-scripts eject"
   },
@@ -42,6 +42,9 @@
   ],
   "devDependencies": {
     "deep-freeze": "0.0.1",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "react-test-renderer": "^16.6.0",
     "redux-logger": "^3.0.6"
   }
 }

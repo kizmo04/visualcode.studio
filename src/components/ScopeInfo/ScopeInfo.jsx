@@ -7,21 +7,21 @@ class ScopeInfo extends Component {
     const { scopeHistory, currentScope, operationType } = this.props;
     return (
       <div className={`${styles.logBox}`}>
-        <h2 className={`${styles.font} ${styles.underline} has-text-success`}>
+        <h2 className={`${styles.font} ${styles.underline} has-text-success operation-type`}>
           {operationType ? `${operationType}` : null}
         </h2>
         {_.map([...scopeHistory, currentScope], (scope, index) => (
-          <div className={`${styles.scopeBox}`}>
+          <div key={index} className={`${styles.scopeBox}`}>
             {_.map(scope, (info, key) => {
               if (key === "scopeName") {
                 return (
-                  <h2 className={`${styles.font} ${styles.closure} has-text-success`}>
+                  <h2 key={index + key} className={`${styles.font} ${styles.closure} has-text-success closure`}>
                     {info.value} Closure
                   </h2>
                 );
               } else {
                 return (
-                  <p className={`${styles.font} has-text-success`}>{`${key}: ${
+                  <p key={index + key} className={`${styles.font} has-text-success property`}>{`${key}: ${
                     info.value
                   }`}</p>
                 );
