@@ -436,11 +436,11 @@ export function getScopeProperties(scope) {
   if (scope.scopeName === "Global") {
     currentScope.window = {
       value: "global Object",
-      type: "string"
+      type: "Object"
     };
     currentScope.this = {
       value: "window",
-      type: "string"
+      type: "Object"
     };
   }
 
