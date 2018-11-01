@@ -24,7 +24,7 @@ export const store = createStore(
 
 render(
   <Provider store={store}>
-    <ConnectedRouter history={history}>
+    <ConnectedRouter history={history} basename={`${process.env.ROOT_URL}`}>
       <App {...store} />
     </ConnectedRouter>
   </Provider>,

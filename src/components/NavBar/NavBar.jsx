@@ -14,9 +14,7 @@ class NavBar extends Component {
     return (
       <nav className={`${styles.backgroundTransparent} navbar`}>
         <div className="navbar-brand">
-          <div className="navbar-item">See JS</div>
-        </div>
-        <div className="navbar-menu">
+          <div className="navbar-item">VisualCode.Studio</div>
           <div className="navbar-start">
             <div className="navbar-item">
               <div className="field is-grouped">
@@ -62,6 +60,8 @@ class NavBar extends Component {
               </div>
             </div>
           </div>
+        </div>
+        <div className="navbar-menu">
         </div>
       </nav>
     );

@@ -34,12 +34,8 @@ ShallowWrapper {
           <div
             className="navbar-item"
           >
-            See JS
+            VisualCode.Studio
           </div>
-        </div>,
-        <div
-          className="navbar-menu"
-        >
           <div
             className="navbar-start"
           >
@@ -94,6 +90,9 @@ ShallowWrapper {
             </div>
           </div>
         </div>,
+        <div
+          className="navbar-menu"
+        />,
       ],
       "className": "backgroundTransparent navbar",
     },
@@ -104,34 +103,12 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "host",
         "props": Object {
-          "children": <div
-            className="navbar-item"
-          >
-            See JS
-          </div>,
-          "className": "navbar-brand",
-        },
-        "ref": null,
-        "rendered": Object {
-          "instance": null,
-          "key": undefined,
-          "nodeType": "host",
-          "props": Object {
-            "children": "See JS",
-            "className": "navbar-item",
-          },
-          "ref": null,
-          "rendered": "See JS",
-          "type": "div",
-        },
-        "type": "div",
-      },
-      Object {
-        "instance": null,
-        "key": undefined,
-        "nodeType": "host",
-        "props": Object {
           "children": Array [
+            <div
+              className="navbar-item"
+            >
+              VisualCode.Studio
+            </div>,
             <div
               className="navbar-start"
             >
@@ -186,10 +163,22 @@ ShallowWrapper {
               </div>
             </div>,
           ],
-          "className": "navbar-menu",
+          "className": "navbar-brand",
         },
         "ref": null,
         "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": "VisualCode.Studio",
+              "className": "navbar-item",
+            },
+            "ref": null,
+            "rendered": "VisualCode.Studio",
+            "type": "div",
+          },
           Object {
             "instance": null,
             "key": undefined,
@@ -425,6 +414,17 @@ ShallowWrapper {
         ],
         "type": "div",
       },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "className": "navbar-menu",
+        },
+        "ref": null,
+        "rendered": null,
+        "type": "div",
+      },
     ],
     "type": "nav",
   },
@@ -441,12 +441,8 @@ ShallowWrapper {
             <div
               className="navbar-item"
             >
-              See JS
+              VisualCode.Studio
             </div>
-          </div>,
-          <div
-            className="navbar-menu"
-          >
             <div
               className="navbar-start"
             >
@@ -501,6 +497,9 @@ ShallowWrapper {
               </div>
             </div>
           </div>,
+          <div
+            className="navbar-menu"
+          />,
         ],
         "className": "backgroundTransparent navbar",
       },
@@ -511,34 +510,12 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "host",
           "props": Object {
-            "children": <div
-              className="navbar-item"
-            >
-              See JS
-            </div>,
-            "className": "navbar-brand",
-          },
-          "ref": null,
-          "rendered": Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "host",
-            "props": Object {
-              "children": "See JS",
-              "className": "navbar-item",
-            },
-            "ref": null,
-            "rendered": "See JS",
-            "type": "div",
-          },
-          "type": "div",
-        },
-        Object {
-          "instance": null,
-          "key": undefined,
-          "nodeType": "host",
-          "props": Object {
             "children": Array [
+              <div
+                className="navbar-item"
+              >
+                VisualCode.Studio
+              </div>,
               <div
                 className="navbar-start"
               >
@@ -593,10 +570,22 @@ ShallowWrapper {
                 </div>
               </div>,
             ],
-            "className": "navbar-menu",
+            "className": "navbar-brand",
           },
           "ref": null,
           "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "VisualCode.Studio",
+                "className": "navbar-item",
+              },
+              "ref": null,
+              "rendered": "VisualCode.Studio",
+              "type": "div",
+            },
             Object {
               "instance": null,
               "key": undefined,
@@ -830,6 +819,17 @@ ShallowWrapper {
               "type": "div",
             },
           ],
+          "type": "div",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "className": "navbar-menu",
+          },
+          "ref": null,
+          "rendered": null,
           "type": "div",
         },
       ],

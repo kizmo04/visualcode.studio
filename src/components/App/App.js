@@ -173,8 +173,9 @@ class App extends Component {
             <Switch>
               <Route
                 exact
-                path={`${process.env.REACT_APP_ROOT_URL}/`}
-                render={() => {
+                path={`/`}
+                render={({ match }) => {
+                  console.log(match)
                   return (
                     <CodeMirror
                       ref={this.codeMirror}
@@ -187,7 +188,7 @@ class App extends Component {
                 }}
               />
               <Route
-                path={`${process.env.REACT_APP_ROOT_URL}/:code_id`}
+                path={`/:code_id`}
                 render={({ match }) => {
                   console.log('MATCH: ', match);
                   getCodeUpstream(match.params.code_id, setChangedCode);
