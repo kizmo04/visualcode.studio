@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { shallow } from "enzyme";
 import NavBar from "./NavBar";
 
 const setup = (setupProps = {}) => {
@@ -26,7 +26,7 @@ const setup = (setupProps = {}) => {
     component,
     props,
     prototypeMethods
-  }
+  };
 };
 
 describe("NavBar", () => {
