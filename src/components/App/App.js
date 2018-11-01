@@ -57,7 +57,6 @@ class App extends Component {
         this._interpreter = new InterpreterWrapper(code, initFunc);
       }
       const {
-        parent,
         currentScope,
         operationType,
         hasNextStep,
@@ -71,7 +70,6 @@ class App extends Component {
       this._codeHighlighter.clear();
       decideNextStep(hasNextStep);
       updateCurrentScope(getScopeProperties(currentScope));
-      if (parent) getScopeProperties(parent);
       updateOperationType(operationType);
       this._codeHighlighter.mark(start, end, code);
     } catch (error) {
@@ -106,7 +104,7 @@ class App extends Component {
       runInterpreter();
       this._interval = setInterval(() => {
         this.runInterpreter();
-      }, (2000 * runningSpeed) / 100);
+      }, 20 * runningSpeed);
     } else {
       stopInterpreter();
       clearInterval(this._interval);
@@ -129,7 +127,9 @@ class App extends Component {
       runningSpeed,
       hasNextStep,
       sharedCodeId,
-      deleteSharedCodeId,
+      isModalActive,
+      closeModal,
+      openInfoModal,
     } = this.props;
     const options = {
       mode: "javascript",
@@ -150,7 +150,7 @@ class App extends Component {
     return (
       <Fragment>
         {
-          sharedCodeId ? <Modal sharedCodeId={sharedCodeId} onModalCloseButtonClick={deleteSharedCodeId} /> : null
+          isModalActive ? <Modal sharedCodeId={sharedCodeId} isActive={isModalActive} onModalCloseButtonClick={closeModal} /> : null
         }
         {
           Object.values(currentScope).map((key, index) => (
@@ -167,6 +167,7 @@ class App extends Component {
           onRestartButtonClick={this.handleRestart}
           onRunButtonClick={this.handleRun}
           onRunningSpeedChange={this.handleChange}
+          onInfoButtonClick={openInfoModal}
         />
         <div className="columns is-multiline">
           <div className="column is-half">
@@ -204,11 +205,13 @@ class App extends Component {
               />
             </Switch>
           </div>
+          <div className="column is-half">
             <ScopeInfo
               scopeHistory={scopeHistory}
               currentScope={currentScope}
               operationType={operationType}
             />
+          </div>
         </div>
       </Fragment>
     );

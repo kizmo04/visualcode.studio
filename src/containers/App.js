@@ -11,7 +11,8 @@ import {
   runningSpeedChanged,
   interpreterStateReset,
   codeShared,
-  sharedCodeIdDeleted,
+  modalClosed,
+  infoModalOpened,
 } from "../actions";
 
 const mapStateToProps = state => Object.assign({}, state);
@@ -47,8 +48,11 @@ const mapDispatchToProps = dispatch => ({
   resetInterpreterState() {
     dispatch(interpreterStateReset());
   },
-  deleteSharedCodeId() {
-    dispatch(sharedCodeIdDeleted());
+  closeModal() {
+    dispatch(modalClosed());
+  },
+  openInfoModal() {
+    dispatch(infoModalOpened());
   },
 });
 

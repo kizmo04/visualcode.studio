@@ -9,7 +9,8 @@ import {
   RUNNING_SPEED_CHANGED,
   INTERPRETER_STATE_RESET,
   CODE_SHARED,
-  SHARED_CODE_ID_DELETED,
+  INFO_MODAL_OPENED,
+  MODAL_CLOSED,
 } from "../constants/actionTypes";
 
 export const initialState = {
@@ -82,8 +83,14 @@ const reducer = (state = initialState, action) => {
         operationType: action.operationType,
         isRunning: action.isRunning,
       });
-    case SHARED_CODE_ID_DELETED:
+    case INFO_MODAL_OPENED:
       return Object.assign({}, state, {
+        isModalActive: action.isModalActive,
+        sharedCodeId: action.sharedCodeId,
+      });
+    case MODAL_CLOSED:
+      return Object.assign({}, state, {
+        isModalActive: action.isModalActive,
         sharedCodeId: action.sharedCodeId,
       });
     default:

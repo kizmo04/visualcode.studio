@@ -10,7 +10,8 @@ import {
   INTERPRETER_STATE_RESET,
   PARENT_SCOPE_UPDATED,
   CODE_SHARED,
-  SHARED_CODE_ID_DELETED,
+  INFO_MODAL_OPENED,
+  MODAL_CLOSED,
 } from "../constants/actionTypes";
 
 export const codeChanged = code => (
@@ -90,12 +91,22 @@ export const codeShared = sharedCodeId => (
   {
     type: CODE_SHARED,
     sharedCodeId,
+    isModalActive: true
   }
 );
 
-export const sharedCodeIdDeleted = () => (
+export const infoModalOpened = () => (
   {
-    type: SHARED_CODE_ID_DELETED,
+    type: INFO_MODAL_OPENED,
+    isModalActive: true,
+    sharedCodeId: null
+  }
+);
+
+export const modalClosed = () => (
+  {
+    type: MODAL_CLOSED,
+    isModalActive: false,
     sharedCodeId: null
   }
 );
