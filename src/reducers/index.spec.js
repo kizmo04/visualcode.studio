@@ -13,22 +13,22 @@ import {
   codeShared,
 } from "../actions";
 
-describe('reducer', () => {
+const setup = (setupBefore = {}, setupAfter = {}, action = {}) => {
+  const defaultState = deepFreeze(_.cloneDeep(initialState));
+  const stateBefore = { ...defaultState, ...setupBefore };
+  const stateAfter = { ...defaultState, ...setupAfter };
 
-  const setup = (setupBefore = {}, setupAfter = {}, action = {}) => {
-    const defaultState = deepFreeze(_.cloneDeep(initialState));
-    const stateBefore = { ...defaultState, ...setupBefore };
-    const stateAfter = { ...defaultState, ...setupAfter };
+  deepFreeze(stateBefore);
+  deepFreeze(action);
 
-    deepFreeze(stateBefore);
-    deepFreeze(action);
-
-    return {
-      stateBefore,
-      stateAfter,
-      action
-    };
+  return {
+    stateBefore,
+    stateAfter,
+    action
   };
+};
+
+describe('reducer', () => {
 
   it('should provide the initial state', () => {
     const { stateAfter } = setup();
