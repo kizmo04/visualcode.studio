@@ -175,7 +175,6 @@ class App extends Component {
                 exact
                 path={`/`}
                 render={({ match }) => {
-                  console.log(match)
                   return (
                     <CodeMirror
                       ref={this.codeMirror}
@@ -188,9 +187,9 @@ class App extends Component {
                 }}
               />
               <Route
-                path={`/:code_id`}
+                path={`code/:code_id`}
                 render={({ match }) => {
-                  console.log('MATCH: ', match);
+                  console.log('MATCH: ', match)
                   getCodeUpstream(match.params.code_id, setChangedCode);
                   return (
                     <CodeMirror

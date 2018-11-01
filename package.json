@@ -48,6 +48,5 @@
     "jsdom-global": "3.0.2",
     "react-test-renderer": "^16.6.0",
     "redux-logger": "^3.0.6"
-  },
-  "homepage": "https://dev.visualcode.studio"
+  }
 }
