@@ -21,7 +21,7 @@ class ScopeInfo extends Component {
                 );
               } else {
                 return (
-                  <p key={index + key} className={`${styles.font} has-text-success property`}>{`${key}: ${
+                  <p key={index + key} ref className={`${styles.font} ${info.highlight ? 'has-background-danger has-text-warning' : 'has-text-success'} property`}>{`${key}: ${
                     info.value
                   }`}</p>
                 );

@@ -37,6 +37,15 @@ const reducer = (state = initialState, action) => {
         code: action.code,
       });
     case CURRENT_SCOPE_UPDATED:
+      if (state.currentScope.scopeName) {
+        _.forOwn(action.currentScope, (propBody, propName) => {
+          if (state.currentScope[propName] && state.currentScope[propName].value !== propBody.value) {
+            propBody.highlight = true;
+          } else {
+            propBody.highlight = false;
+          }
+        });
+      }
       if (!state.currentScope.scopeName || state.currentScope.scopeName.value === action.currentScope.scopeName.value) {
         return Object.assign({}, state, {
           currentScope: _.assign({}, state.currentScope, action.currentScope),
