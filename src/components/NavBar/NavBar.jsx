@@ -61,8 +61,8 @@ class NavBar extends Component {
             </div>
           </div>
         </div>
-        <div className="navbar-menu">
-        </div>
+        {/* <div className="navbar-menu">
+        </div> */}
       </nav>
     );
   }
