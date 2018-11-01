@@ -10,17 +10,17 @@ export const setCodeUptream = (code, cb) => {
   })
   .then(data => {
     cb(newKey);
-    alert(`localhost:3000/${newKey}`);
   })
-  .catch(err => {
-    console.log(err);
-  });
+  .catch(err => console.log(err));
 };
 
 export const getCodeUpstream = (id, cb) => {
   db.ref(`code/${id}`).on('value', snapshot => {
-    const data = snapshot.val();
-    console.log('data', data)
-    cb(data.code);
+    try {
+      const data = snapshot.val();
+      cb(data.code);
+    } catch (error) {
+      console.log(error);
+    }
   });
 };

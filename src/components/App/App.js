@@ -23,6 +23,7 @@ import "./codeMirror.scss";
 import PtsCanvas from "../PtsCanvas/PtsCanvas";
 import ScopeInfo from "../ScopeInfo/ScopeInfo";
 import NavBar from "../NavBar/NavBar";
+import Modal from "../Modal/Modal";
 
 class App extends Component {
   constructor(props) {
@@ -78,12 +79,10 @@ class App extends Component {
     }
   }
   handleBeforeChange(editor, data, code) {
-    const { setChangedCode } = this.props;
-    setChangedCode(code);
+    this.props.setChangedCode(code);
   }
   handleChange(speed) {
-    const { changeRunningSpeed } = this.props;
-    changeRunningSpeed(speed);
+    this.props.changeRunningSpeed(speed);
   }
   handleRestart() {
     const { code, resetInterpreterState } = this.props;
@@ -129,6 +128,8 @@ class App extends Component {
       setChangedCode,
       runningSpeed,
       hasNextStep,
+      sharedCodeId,
+      deleteSharedCodeId,
     } = this.props;
     const options = {
       mode: "javascript",
@@ -148,6 +149,9 @@ class App extends Component {
     // console.log(scopeHistory);
     return (
       <Fragment>
+        {
+          sharedCodeId ? <Modal sharedCodeId={sharedCodeId} onModalCloseButtonClick={deleteSharedCodeId} /> : null
+        }
         {
           Object.values(currentScope).map((key, index) => (
             <PtsCanvas className="pts-canvas" key={index} variable={key} operationType={operationType} />

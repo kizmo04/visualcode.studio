@@ -9,6 +9,7 @@ import {
   RUNNING_SPEED_CHANGED,
   INTERPRETER_STATE_RESET,
   CODE_SHARED,
+  SHARED_CODE_ID_DELETED,
 } from "../constants/actionTypes";
 
 export const initialState = {
@@ -80,6 +81,10 @@ const reducer = (state = initialState, action) => {
         hasNextStep: action.hasNextStep,
         operationType: action.operationType,
         isRunning: action.isRunning,
+      });
+    case SHARED_CODE_ID_DELETED:
+      return Object.assign({}, state, {
+        sharedCodeId: action.sharedCodeId,
       });
     default:
       return state;

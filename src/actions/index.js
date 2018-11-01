@@ -10,6 +10,7 @@ import {
   INTERPRETER_STATE_RESET,
   PARENT_SCOPE_UPDATED,
   CODE_SHARED,
+  SHARED_CODE_ID_DELETED,
 } from "../constants/actionTypes";
 
 export const codeChanged = code => (
@@ -89,5 +90,12 @@ export const codeShared = sharedCodeId => (
   {
     type: CODE_SHARED,
     sharedCodeId,
+  }
+);
+
+export const sharedCodeIdDeleted = () => (
+  {
+    type: SHARED_CODE_ID_DELETED,
+    sharedCodeId: null
   }
 );

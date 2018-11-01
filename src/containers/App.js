@@ -11,6 +11,7 @@ import {
   runningSpeedChanged,
   interpreterStateReset,
   codeShared,
+  sharedCodeIdDeleted,
 } from "../actions";
 
 const mapStateToProps = state => Object.assign({}, state);
@@ -45,7 +46,10 @@ const mapDispatchToProps = dispatch => ({
   },
   resetInterpreterState() {
     dispatch(interpreterStateReset());
-  }
+  },
+  deleteSharedCodeId() {
+    dispatch(sharedCodeIdDeleted());
+  },
 });
 
 export default connect(
