@@ -36,14 +36,56 @@ ShallowWrapper {
           VisualCode.Studio
         </div>
         <div
-          className="navbar-start"
+          className="navbar-item"
         >
           <div
-            className="navbar-item"
+            className="field is-grouped"
           >
             <div
-              className="field is-grouped"
+              className="marginRight button is-white is-small info-button"
+              onClick={[Function]}
             >
+              <i
+                className="icon material-icons has-text-info"
+              >
+                help_outline
+              </i>
+            </div>
+            <div
+              className="marginRight button is-info is-small share-button"
+              onClick={[MockFunction]}
+            >
+              Share
+            </div>
+            <div
+              className="marginRight button is-small is-info run-button"
+              onClick={[MockFunction]}
+            >
+              Run
+            </div>
+          </div>
+        </div>
+        <div
+          className="navbar-menu"
+        >
+          <div
+            className="navbar-start"
+          >
+            <input
+              className="marginRight slider is-fullwidth is-info running-speed-slider"
+              defaultValue="50"
+              max="100"
+              min="0"
+              onChange={[Function]}
+              step="1"
+              type="range"
+            />
+            <div
+              className="navbar-item"
+            >
+              <div
+                className="field is-grouped"
+              />
               <div
                 className="marginRight button is-small is-info step-button"
                 onClick={[MockFunction]}
@@ -51,40 +93,11 @@ ShallowWrapper {
                 Next Step
               </div>
               <div
-                className="marginRight button is-small is-info run-button"
-                onClick={[MockFunction]}
-              >
-                Run
-              </div>
-              <input
-                className="marginRight slider is-fullwidth is-info running-speed-slider"
-                defaultValue="50"
-                max="100"
-                min="0"
-                onChange={[Function]}
-                step="1"
-                type="range"
-              />
-              <div
-                className="marginNone button is-small is-info restart-button"
+                className="marginRight button is-small is-info restart-button"
                 onClick={[MockFunction]}
               >
                 Restart
               </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className="navbar-end"
-        >
-          <div
-            className="navbar-item"
-          >
-            <div
-              className="button is-info is-small share-button"
-              onClick={[MockFunction]}
-            >
-              Share
             </div>
           </div>
         </div>
@@ -104,14 +117,56 @@ ShallowWrapper {
             VisualCode.Studio
           </div>,
           <div
-            className="navbar-start"
+            className="navbar-item"
           >
             <div
-              className="navbar-item"
+              className="field is-grouped"
             >
               <div
-                className="field is-grouped"
+                className="marginRight button is-white is-small info-button"
+                onClick={[Function]}
               >
+                <i
+                  className="icon material-icons has-text-info"
+                >
+                  help_outline
+                </i>
+              </div>
+              <div
+                className="marginRight button is-info is-small share-button"
+                onClick={[MockFunction]}
+              >
+                Share
+              </div>
+              <div
+                className="marginRight button is-small is-info run-button"
+                onClick={[MockFunction]}
+              >
+                Run
+              </div>
+            </div>
+          </div>,
+          <div
+            className="navbar-menu"
+          >
+            <div
+              className="navbar-start"
+            >
+              <input
+                className="marginRight slider is-fullwidth is-info running-speed-slider"
+                defaultValue="50"
+                max="100"
+                min="0"
+                onChange={[Function]}
+                step="1"
+                type="range"
+              />
+              <div
+                className="navbar-item"
+              >
+                <div
+                  className="field is-grouped"
+                />
                 <div
                   className="marginRight button is-small is-info step-button"
                   onClick={[MockFunction]}
@@ -119,40 +174,11 @@ ShallowWrapper {
                   Next Step
                 </div>
                 <div
-                  className="marginRight button is-small is-info run-button"
-                  onClick={[MockFunction]}
-                >
-                  Run
-                </div>
-                <input
-                  className="marginRight slider is-fullwidth is-info running-speed-slider"
-                  defaultValue="50"
-                  max="100"
-                  min="0"
-                  onChange={[Function]}
-                  step="1"
-                  type="range"
-                />
-                <div
-                  className="marginNone button is-small is-info restart-button"
+                  className="marginRight button is-small is-info restart-button"
                   onClick={[MockFunction]}
                 >
                   Restart
                 </div>
-              </div>
-            </div>
-          </div>,
-          <div
-            className="navbar-end"
-          >
-            <div
-              className="navbar-item"
-            >
-              <div
-                className="button is-info is-small share-button"
-                onClick={[MockFunction]}
-              >
-                Share
               </div>
             </div>
           </div>,
@@ -179,41 +205,32 @@ ShallowWrapper {
           "nodeType": "host",
           "props": Object {
             "children": <div
-              className="navbar-item"
+              className="field is-grouped"
             >
               <div
-                className="field is-grouped"
+                className="marginRight button is-white is-small info-button"
+                onClick={[Function]}
               >
-                <div
-                  className="marginRight button is-small is-info step-button"
-                  onClick={[MockFunction]}
+                <i
+                  className="icon material-icons has-text-info"
                 >
-                  Next Step
-                </div>
-                <div
-                  className="marginRight button is-small is-info run-button"
-                  onClick={[MockFunction]}
-                >
-                  Run
-                </div>
-                <input
-                  className="marginRight slider is-fullwidth is-info running-speed-slider"
-                  defaultValue="50"
-                  max="100"
-                  min="0"
-                  onChange={[Function]}
-                  step="1"
-                  type="range"
-                />
-                <div
-                  className="marginNone button is-small is-info restart-button"
-                  onClick={[MockFunction]}
-                >
-                  Restart
-                </div>
+                  help_outline
+                </i>
+              </div>
+              <div
+                className="marginRight button is-info is-small share-button"
+                onClick={[MockFunction]}
+              >
+                Share
+              </div>
+              <div
+                className="marginRight button is-small is-info run-button"
+                onClick={[MockFunction]}
+              >
+                Run
               </div>
             </div>,
-            "className": "navbar-start",
+            "className": "navbar-item",
           },
           "ref": null,
           "rendered": Object {
@@ -221,137 +238,89 @@ ShallowWrapper {
             "key": undefined,
             "nodeType": "host",
             "props": Object {
-              "children": <div
-                className="field is-grouped"
-              >
+              "children": Array [
                 <div
-                  className="marginRight button is-small is-info step-button"
+                  className="marginRight button is-white is-small info-button"
+                  onClick={[Function]}
+                >
+                  <i
+                    className="icon material-icons has-text-info"
+                  >
+                    help_outline
+                  </i>
+                </div>,
+                <div
+                  className="marginRight button is-info is-small share-button"
                   onClick={[MockFunction]}
                 >
-                  Next Step
-                </div>
+                  Share
+                </div>,
                 <div
                   className="marginRight button is-small is-info run-button"
                   onClick={[MockFunction]}
                 >
                   Run
-                </div>
-                <input
-                  className="marginRight slider is-fullwidth is-info running-speed-slider"
-                  defaultValue="50"
-                  max="100"
-                  min="0"
-                  onChange={[Function]}
-                  step="1"
-                  type="range"
-                />
-                <div
-                  className="marginNone button is-small is-info restart-button"
-                  onClick={[MockFunction]}
-                >
-                  Restart
-                </div>
-              </div>,
-              "className": "navbar-item",
+                </div>,
+              ],
+              "className": "field is-grouped",
             },
             "ref": null,
-            "rendered": Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "host",
-              "props": Object {
-                "children": Array [
-                  <div
-                    className="marginRight button is-small is-info step-button"
-                    onClick={[MockFunction]}
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": <i
+                    className="icon material-icons has-text-info"
                   >
-                    Next Step
-                  </div>,
-                  <div
-                    className="marginRight button is-small is-info run-button"
-                    onClick={[MockFunction]}
-                  >
-                    Run
-                  </div>,
-                  <input
-                    className="marginRight slider is-fullwidth is-info running-speed-slider"
-                    defaultValue="50"
-                    max="100"
-                    min="0"
-                    onChange={[Function]}
-                    step="1"
-                    type="range"
-                  />,
-                  <div
-                    className="marginNone button is-small is-info restart-button"
-                    onClick={[MockFunction]}
-                  >
-                    Restart
-                  </div>,
-                ],
-                "className": "field is-grouped",
+                    help_outline
+                  </i>,
+                  "className": "marginRight button is-white is-small info-button",
+                  "onClick": [Function],
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": "help_outline",
+                    "className": "icon material-icons has-text-info",
+                  },
+                  "ref": null,
+                  "rendered": "help_outline",
+                  "type": "i",
+                },
+                "type": "div",
               },
-              "ref": null,
-              "rendered": Array [
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "children": "Next Step",
-                    "className": "marginRight button is-small is-info step-button",
-                    "onClick": [MockFunction],
-                  },
-                  "ref": null,
-                  "rendered": "Next Step",
-                  "type": "div",
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "Share",
+                  "className": "marginRight button is-info is-small share-button",
+                  "onClick": [MockFunction],
                 },
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "children": "Run",
-                    "className": "marginRight button is-small is-info run-button",
-                    "onClick": [MockFunction],
-                  },
-                  "ref": null,
-                  "rendered": "Run",
-                  "type": "div",
+                "ref": null,
+                "rendered": "Share",
+                "type": "div",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "Run",
+                  "className": "marginRight button is-small is-info run-button",
+                  "onClick": [MockFunction],
                 },
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "className": "marginRight slider is-fullwidth is-info running-speed-slider",
-                    "defaultValue": "50",
-                    "max": "100",
-                    "min": "0",
-                    "onChange": [Function],
-                    "step": "1",
-                    "type": "range",
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": "input",
-                },
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "children": "Restart",
-                    "className": "marginNone button is-small is-info restart-button",
-                    "onClick": [MockFunction],
-                  },
-                  "ref": null,
-                  "rendered": "Restart",
-                  "type": "div",
-                },
-              ],
-              "type": "div",
-            },
+                "ref": null,
+                "rendered": "Run",
+                "type": "div",
+              },
+            ],
             "type": "div",
           },
           "type": "div",
@@ -362,16 +331,38 @@ ShallowWrapper {
           "nodeType": "host",
           "props": Object {
             "children": <div
-              className="navbar-item"
+              className="navbar-start"
             >
+              <input
+                className="marginRight slider is-fullwidth is-info running-speed-slider"
+                defaultValue="50"
+                max="100"
+                min="0"
+                onChange={[Function]}
+                step="1"
+                type="range"
+              />
               <div
-                className="button is-info is-small share-button"
-                onClick={[MockFunction]}
+                className="navbar-item"
               >
-                Share
+                <div
+                  className="field is-grouped"
+                />
+                <div
+                  className="marginRight button is-small is-info step-button"
+                  onClick={[MockFunction]}
+                >
+                  Next Step
+                </div>
+                <div
+                  className="marginRight button is-small is-info restart-button"
+                  onClick={[MockFunction]}
+                >
+                  Restart
+                </div>
               </div>
             </div>,
-            "className": "navbar-end",
+            "className": "navbar-menu",
           },
           "ref": null,
           "rendered": Object {
@@ -379,28 +370,124 @@ ShallowWrapper {
             "key": undefined,
             "nodeType": "host",
             "props": Object {
-              "children": <div
-                className="button is-info is-small share-button"
-                onClick={[MockFunction]}
-              >
-                Share
-              </div>,
-              "className": "navbar-item",
+              "children": Array [
+                <input
+                  className="marginRight slider is-fullwidth is-info running-speed-slider"
+                  defaultValue="50"
+                  max="100"
+                  min="0"
+                  onChange={[Function]}
+                  step="1"
+                  type="range"
+                />,
+                <div
+                  className="navbar-item"
+                >
+                  <div
+                    className="field is-grouped"
+                  />
+                  <div
+                    className="marginRight button is-small is-info step-button"
+                    onClick={[MockFunction]}
+                  >
+                    Next Step
+                  </div>
+                  <div
+                    className="marginRight button is-small is-info restart-button"
+                    onClick={[MockFunction]}
+                  >
+                    Restart
+                  </div>
+                </div>,
+              ],
+              "className": "navbar-start",
             },
             "ref": null,
-            "rendered": Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "host",
-              "props": Object {
-                "children": "Share",
-                "className": "button is-info is-small share-button",
-                "onClick": [MockFunction],
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "className": "marginRight slider is-fullwidth is-info running-speed-slider",
+                  "defaultValue": "50",
+                  "max": "100",
+                  "min": "0",
+                  "onChange": [Function],
+                  "step": "1",
+                  "type": "range",
+                },
+                "ref": null,
+                "rendered": null,
+                "type": "input",
               },
-              "ref": null,
-              "rendered": "Share",
-              "type": "div",
-            },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": Array [
+                    <div
+                      className="field is-grouped"
+                    />,
+                    <div
+                      className="marginRight button is-small is-info step-button"
+                      onClick={[MockFunction]}
+                    >
+                      Next Step
+                    </div>,
+                    <div
+                      className="marginRight button is-small is-info restart-button"
+                      onClick={[MockFunction]}
+                    >
+                      Restart
+                    </div>,
+                  ],
+                  "className": "navbar-item",
+                },
+                "ref": null,
+                "rendered": Array [
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "className": "field is-grouped",
+                    },
+                    "ref": null,
+                    "rendered": null,
+                    "type": "div",
+                  },
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": "Next Step",
+                      "className": "marginRight button is-small is-info step-button",
+                      "onClick": [MockFunction],
+                    },
+                    "ref": null,
+                    "rendered": "Next Step",
+                    "type": "div",
+                  },
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": "Restart",
+                      "className": "marginRight button is-small is-info restart-button",
+                      "onClick": [MockFunction],
+                    },
+                    "ref": null,
+                    "rendered": "Restart",
+                    "type": "div",
+                  },
+                ],
+                "type": "div",
+              },
+            ],
             "type": "div",
           },
           "type": "div",
@@ -425,14 +512,56 @@ ShallowWrapper {
             VisualCode.Studio
           </div>
           <div
-            className="navbar-start"
+            className="navbar-item"
           >
             <div
-              className="navbar-item"
+              className="field is-grouped"
             >
               <div
-                className="field is-grouped"
+                className="marginRight button is-white is-small info-button"
+                onClick={[Function]}
               >
+                <i
+                  className="icon material-icons has-text-info"
+                >
+                  help_outline
+                </i>
+              </div>
+              <div
+                className="marginRight button is-info is-small share-button"
+                onClick={[MockFunction]}
+              >
+                Share
+              </div>
+              <div
+                className="marginRight button is-small is-info run-button"
+                onClick={[MockFunction]}
+              >
+                Run
+              </div>
+            </div>
+          </div>
+          <div
+            className="navbar-menu"
+          >
+            <div
+              className="navbar-start"
+            >
+              <input
+                className="marginRight slider is-fullwidth is-info running-speed-slider"
+                defaultValue="50"
+                max="100"
+                min="0"
+                onChange={[Function]}
+                step="1"
+                type="range"
+              />
+              <div
+                className="navbar-item"
+              >
+                <div
+                  className="field is-grouped"
+                />
                 <div
                   className="marginRight button is-small is-info step-button"
                   onClick={[MockFunction]}
@@ -440,40 +569,11 @@ ShallowWrapper {
                   Next Step
                 </div>
                 <div
-                  className="marginRight button is-small is-info run-button"
-                  onClick={[MockFunction]}
-                >
-                  Run
-                </div>
-                <input
-                  className="marginRight slider is-fullwidth is-info running-speed-slider"
-                  defaultValue="50"
-                  max="100"
-                  min="0"
-                  onChange={[Function]}
-                  step="1"
-                  type="range"
-                />
-                <div
-                  className="marginNone button is-small is-info restart-button"
+                  className="marginRight button is-small is-info restart-button"
                   onClick={[MockFunction]}
                 >
                   Restart
                 </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="navbar-end"
-          >
-            <div
-              className="navbar-item"
-            >
-              <div
-                className="button is-info is-small share-button"
-                onClick={[MockFunction]}
-              >
-                Share
               </div>
             </div>
           </div>
@@ -493,14 +593,56 @@ ShallowWrapper {
               VisualCode.Studio
             </div>,
             <div
-              className="navbar-start"
+              className="navbar-item"
             >
               <div
-                className="navbar-item"
+                className="field is-grouped"
               >
                 <div
-                  className="field is-grouped"
+                  className="marginRight button is-white is-small info-button"
+                  onClick={[Function]}
                 >
+                  <i
+                    className="icon material-icons has-text-info"
+                  >
+                    help_outline
+                  </i>
+                </div>
+                <div
+                  className="marginRight button is-info is-small share-button"
+                  onClick={[MockFunction]}
+                >
+                  Share
+                </div>
+                <div
+                  className="marginRight button is-small is-info run-button"
+                  onClick={[MockFunction]}
+                >
+                  Run
+                </div>
+              </div>
+            </div>,
+            <div
+              className="navbar-menu"
+            >
+              <div
+                className="navbar-start"
+              >
+                <input
+                  className="marginRight slider is-fullwidth is-info running-speed-slider"
+                  defaultValue="50"
+                  max="100"
+                  min="0"
+                  onChange={[Function]}
+                  step="1"
+                  type="range"
+                />
+                <div
+                  className="navbar-item"
+                >
+                  <div
+                    className="field is-grouped"
+                  />
                   <div
                     className="marginRight button is-small is-info step-button"
                     onClick={[MockFunction]}
@@ -508,40 +650,11 @@ ShallowWrapper {
                     Next Step
                   </div>
                   <div
-                    className="marginRight button is-small is-info run-button"
-                    onClick={[MockFunction]}
-                  >
-                    Run
-                  </div>
-                  <input
-                    className="marginRight slider is-fullwidth is-info running-speed-slider"
-                    defaultValue="50"
-                    max="100"
-                    min="0"
-                    onChange={[Function]}
-                    step="1"
-                    type="range"
-                  />
-                  <div
-                    className="marginNone button is-small is-info restart-button"
+                    className="marginRight button is-small is-info restart-button"
                     onClick={[MockFunction]}
                   >
                     Restart
                   </div>
-                </div>
-              </div>
-            </div>,
-            <div
-              className="navbar-end"
-            >
-              <div
-                className="navbar-item"
-              >
-                <div
-                  className="button is-info is-small share-button"
-                  onClick={[MockFunction]}
-                >
-                  Share
                 </div>
               </div>
             </div>,
@@ -568,41 +681,32 @@ ShallowWrapper {
             "nodeType": "host",
             "props": Object {
               "children": <div
-                className="navbar-item"
+                className="field is-grouped"
               >
                 <div
-                  className="field is-grouped"
+                  className="marginRight button is-white is-small info-button"
+                  onClick={[Function]}
                 >
-                  <div
-                    className="marginRight button is-small is-info step-button"
-                    onClick={[MockFunction]}
+                  <i
+                    className="icon material-icons has-text-info"
                   >
-                    Next Step
-                  </div>
-                  <div
-                    className="marginRight button is-small is-info run-button"
-                    onClick={[MockFunction]}
-                  >
-                    Run
-                  </div>
-                  <input
-                    className="marginRight slider is-fullwidth is-info running-speed-slider"
-                    defaultValue="50"
-                    max="100"
-                    min="0"
-                    onChange={[Function]}
-                    step="1"
-                    type="range"
-                  />
-                  <div
-                    className="marginNone button is-small is-info restart-button"
-                    onClick={[MockFunction]}
-                  >
-                    Restart
-                  </div>
+                    help_outline
+                  </i>
+                </div>
+                <div
+                  className="marginRight button is-info is-small share-button"
+                  onClick={[MockFunction]}
+                >
+                  Share
+                </div>
+                <div
+                  className="marginRight button is-small is-info run-button"
+                  onClick={[MockFunction]}
+                >
+                  Run
                 </div>
               </div>,
-              "className": "navbar-start",
+              "className": "navbar-item",
             },
             "ref": null,
             "rendered": Object {
@@ -610,137 +714,89 @@ ShallowWrapper {
               "key": undefined,
               "nodeType": "host",
               "props": Object {
-                "children": <div
-                  className="field is-grouped"
-                >
+                "children": Array [
                   <div
-                    className="marginRight button is-small is-info step-button"
+                    className="marginRight button is-white is-small info-button"
+                    onClick={[Function]}
+                  >
+                    <i
+                      className="icon material-icons has-text-info"
+                    >
+                      help_outline
+                    </i>
+                  </div>,
+                  <div
+                    className="marginRight button is-info is-small share-button"
                     onClick={[MockFunction]}
                   >
-                    Next Step
-                  </div>
+                    Share
+                  </div>,
                   <div
                     className="marginRight button is-small is-info run-button"
                     onClick={[MockFunction]}
                   >
                     Run
-                  </div>
-                  <input
-                    className="marginRight slider is-fullwidth is-info running-speed-slider"
-                    defaultValue="50"
-                    max="100"
-                    min="0"
-                    onChange={[Function]}
-                    step="1"
-                    type="range"
-                  />
-                  <div
-                    className="marginNone button is-small is-info restart-button"
-                    onClick={[MockFunction]}
-                  >
-                    Restart
-                  </div>
-                </div>,
-                "className": "navbar-item",
+                  </div>,
+                ],
+                "className": "field is-grouped",
               },
               "ref": null,
-              "rendered": Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "host",
-                "props": Object {
-                  "children": Array [
-                    <div
-                      className="marginRight button is-small is-info step-button"
-                      onClick={[MockFunction]}
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": <i
+                      className="icon material-icons has-text-info"
                     >
-                      Next Step
-                    </div>,
-                    <div
-                      className="marginRight button is-small is-info run-button"
-                      onClick={[MockFunction]}
-                    >
-                      Run
-                    </div>,
-                    <input
-                      className="marginRight slider is-fullwidth is-info running-speed-slider"
-                      defaultValue="50"
-                      max="100"
-                      min="0"
-                      onChange={[Function]}
-                      step="1"
-                      type="range"
-                    />,
-                    <div
-                      className="marginNone button is-small is-info restart-button"
-                      onClick={[MockFunction]}
-                    >
-                      Restart
-                    </div>,
-                  ],
-                  "className": "field is-grouped",
+                      help_outline
+                    </i>,
+                    "className": "marginRight button is-white is-small info-button",
+                    "onClick": [Function],
+                  },
+                  "ref": null,
+                  "rendered": Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": "help_outline",
+                      "className": "icon material-icons has-text-info",
+                    },
+                    "ref": null,
+                    "rendered": "help_outline",
+                    "type": "i",
+                  },
+                  "type": "div",
                 },
-                "ref": null,
-                "rendered": Array [
-                  Object {
-                    "instance": null,
-                    "key": undefined,
-                    "nodeType": "host",
-                    "props": Object {
-                      "children": "Next Step",
-                      "className": "marginRight button is-small is-info step-button",
-                      "onClick": [MockFunction],
-                    },
-                    "ref": null,
-                    "rendered": "Next Step",
-                    "type": "div",
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": "Share",
+                    "className": "marginRight button is-info is-small share-button",
+                    "onClick": [MockFunction],
                   },
-                  Object {
-                    "instance": null,
-                    "key": undefined,
-                    "nodeType": "host",
-                    "props": Object {
-                      "children": "Run",
-                      "className": "marginRight button is-small is-info run-button",
-                      "onClick": [MockFunction],
-                    },
-                    "ref": null,
-                    "rendered": "Run",
-                    "type": "div",
+                  "ref": null,
+                  "rendered": "Share",
+                  "type": "div",
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": "Run",
+                    "className": "marginRight button is-small is-info run-button",
+                    "onClick": [MockFunction],
                   },
-                  Object {
-                    "instance": null,
-                    "key": undefined,
-                    "nodeType": "host",
-                    "props": Object {
-                      "className": "marginRight slider is-fullwidth is-info running-speed-slider",
-                      "defaultValue": "50",
-                      "max": "100",
-                      "min": "0",
-                      "onChange": [Function],
-                      "step": "1",
-                      "type": "range",
-                    },
-                    "ref": null,
-                    "rendered": null,
-                    "type": "input",
-                  },
-                  Object {
-                    "instance": null,
-                    "key": undefined,
-                    "nodeType": "host",
-                    "props": Object {
-                      "children": "Restart",
-                      "className": "marginNone button is-small is-info restart-button",
-                      "onClick": [MockFunction],
-                    },
-                    "ref": null,
-                    "rendered": "Restart",
-                    "type": "div",
-                  },
-                ],
-                "type": "div",
-              },
+                  "ref": null,
+                  "rendered": "Run",
+                  "type": "div",
+                },
+              ],
               "type": "div",
             },
             "type": "div",
@@ -751,16 +807,38 @@ ShallowWrapper {
             "nodeType": "host",
             "props": Object {
               "children": <div
-                className="navbar-item"
+                className="navbar-start"
               >
+                <input
+                  className="marginRight slider is-fullwidth is-info running-speed-slider"
+                  defaultValue="50"
+                  max="100"
+                  min="0"
+                  onChange={[Function]}
+                  step="1"
+                  type="range"
+                />
                 <div
-                  className="button is-info is-small share-button"
-                  onClick={[MockFunction]}
+                  className="navbar-item"
                 >
-                  Share
+                  <div
+                    className="field is-grouped"
+                  />
+                  <div
+                    className="marginRight button is-small is-info step-button"
+                    onClick={[MockFunction]}
+                  >
+                    Next Step
+                  </div>
+                  <div
+                    className="marginRight button is-small is-info restart-button"
+                    onClick={[MockFunction]}
+                  >
+                    Restart
+                  </div>
                 </div>
               </div>,
-              "className": "navbar-end",
+              "className": "navbar-menu",
             },
             "ref": null,
             "rendered": Object {
@@ -768,28 +846,124 @@ ShallowWrapper {
               "key": undefined,
               "nodeType": "host",
               "props": Object {
-                "children": <div
-                  className="button is-info is-small share-button"
-                  onClick={[MockFunction]}
-                >
-                  Share
-                </div>,
-                "className": "navbar-item",
+                "children": Array [
+                  <input
+                    className="marginRight slider is-fullwidth is-info running-speed-slider"
+                    defaultValue="50"
+                    max="100"
+                    min="0"
+                    onChange={[Function]}
+                    step="1"
+                    type="range"
+                  />,
+                  <div
+                    className="navbar-item"
+                  >
+                    <div
+                      className="field is-grouped"
+                    />
+                    <div
+                      className="marginRight button is-small is-info step-button"
+                      onClick={[MockFunction]}
+                    >
+                      Next Step
+                    </div>
+                    <div
+                      className="marginRight button is-small is-info restart-button"
+                      onClick={[MockFunction]}
+                    >
+                      Restart
+                    </div>
+                  </div>,
+                ],
+                "className": "navbar-start",
               },
               "ref": null,
-              "rendered": Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "host",
-                "props": Object {
-                  "children": "Share",
-                  "className": "button is-info is-small share-button",
-                  "onClick": [MockFunction],
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "className": "marginRight slider is-fullwidth is-info running-speed-slider",
+                    "defaultValue": "50",
+                    "max": "100",
+                    "min": "0",
+                    "onChange": [Function],
+                    "step": "1",
+                    "type": "range",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": "input",
                 },
-                "ref": null,
-                "rendered": "Share",
-                "type": "div",
-              },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": Array [
+                      <div
+                        className="field is-grouped"
+                      />,
+                      <div
+                        className="marginRight button is-small is-info step-button"
+                        onClick={[MockFunction]}
+                      >
+                        Next Step
+                      </div>,
+                      <div
+                        className="marginRight button is-small is-info restart-button"
+                        onClick={[MockFunction]}
+                      >
+                        Restart
+                      </div>,
+                    ],
+                    "className": "navbar-item",
+                  },
+                  "ref": null,
+                  "rendered": Array [
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "className": "field is-grouped",
+                      },
+                      "ref": null,
+                      "rendered": null,
+                      "type": "div",
+                    },
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": "Next Step",
+                        "className": "marginRight button is-small is-info step-button",
+                        "onClick": [MockFunction],
+                      },
+                      "ref": null,
+                      "rendered": "Next Step",
+                      "type": "div",
+                    },
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": "Restart",
+                        "className": "marginRight button is-small is-info restart-button",
+                        "onClick": [MockFunction],
+                      },
+                      "ref": null,
+                      "rendered": "Restart",
+                      "type": "div",
+                    },
+                  ],
+                  "type": "div",
+                },
+              ],
               "type": "div",
             },
             "type": "div",
