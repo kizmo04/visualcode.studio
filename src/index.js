@@ -6,7 +6,7 @@ import { applyMiddleware, compose, createStore } from "redux";
 import { Provider } from "react-redux";
 import reducer from "./reducers";
 import logger from "redux-logger";
-import { createHashHistory } from "history";
+import { createBrowserHistory } from "history";
 import {
   ConnectedRouter,
   connectRouter,
@@ -16,7 +16,7 @@ import { JSHINT } from "jshint";
 
 window.JSHINT = JSHINT;
 
-const history = createHashHistory();
+const history = createBrowserHistory();
 export const store = createStore(
   connectRouter(history)(reducer),
   compose(applyMiddleware(routerMiddleware(history), logger))
