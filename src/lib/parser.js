@@ -333,7 +333,22 @@ export class InterpreterWrapper extends Interpreter {
     if (currentState.func_) {
       const { name } = currentState.func_.node.id;
       this.scopeNames.push(name);
-      return;
+      console.log('NAME: ', name)
+      return {
+        currentScope: {
+          scopeName: this.scopeNames[this.scopeNames.length - 2],
+          ...currentState.scope.properties
+        },
+        // parent: currentState.scope.parentScope
+        //   ? {
+        //       ...currentState.scope.parentScope.properties
+        //     }
+        //   : null,
+        operationType: currentState.node.type,
+        hasNextStep,
+        start,
+        end,
+      };
     }
     // if (currentState.node.type === "CallExpression" && currentState["doneCallee_"] && currentState.doneCallee_ === 1) {
     //   const { name } = currentState.node.callee;
@@ -349,11 +364,11 @@ export class InterpreterWrapper extends Interpreter {
         scopeName: this.scopeNames[this.scopeNames.length - 1],
         ...currentState.scope.properties
       },
-      parent: currentState.scope.parentScope
-        ? {
-            ...currentState.scope.parentScope.properties
-          }
-        : null,
+      // parent: currentState.scope.parentScope
+      //   ? {
+      //       ...currentState.scope.parentScope.properties
+      //     }
+      //   : null,
       operationType: currentState.node.type,
       hasNextStep,
       start,
