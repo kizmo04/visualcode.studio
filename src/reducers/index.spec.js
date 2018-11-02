@@ -42,7 +42,8 @@ describe('reducer', () => {
       const { stateBefore, stateAfter, action } = setup(
         {},
         {
-          sharedCodeId: 'code'
+          sharedCodeId: 'code',
+          isModalActive: true
         },
         codeShared('code')
       );
