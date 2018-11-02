@@ -80,6 +80,7 @@ export const runningSpeedChanged = runningSpeed => (
 export const interpreterStateReset = () => (
   {
     type: INTERPRETER_STATE_RESET,
+    scopeHistory: [],
     currentScope: {},
     hasNextStep: true,
     operationType: "",

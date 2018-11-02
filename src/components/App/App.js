@@ -50,7 +50,8 @@ class App extends Component {
       updateOperationType,
       decideNextStep,
       stopInterpreter,
-      isRunning
+      isRunning,
+      resetInterpreterState,
     } = this.props;
     try {
       if (!this._interpreter || this._interpreter.code !== code) {
@@ -63,15 +64,19 @@ class App extends Component {
         start,
         end
       } = this._interpreter.nextStep();
-      if (isRunning && !hasNextStep) {
+      if ((isRunning && !hasNextStep) || operationType === "End") {
         stopInterpreter();
         clearInterval(this._interval);
       }
-      this._codeHighlighter.clear();
-      decideNextStep(hasNextStep);
-      updateCurrentScope(getScopeProperties(currentScope));
-      updateOperationType(operationType);
-      this._codeHighlighter.mark(start, end, code);
+      if (operationType === "End") {
+        resetInterpreterState();
+      } else {
+        this._codeHighlighter.clear();
+        decideNextStep(hasNextStep);
+        updateCurrentScope(getScopeProperties(currentScope));
+        updateOperationType(operationType);
+        this._codeHighlighter.mark(start, end, code);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -104,7 +109,7 @@ class App extends Component {
       runInterpreter();
       this._interval = setInterval(() => {
         this.runInterpreter();
-      }, 20 * runningSpeed);
+      }, !runningSpeed ? 600 : 20 * runningSpeed);
     } else {
       stopInterpreter();
       clearInterval(this._interval);
@@ -142,9 +147,6 @@ class App extends Component {
       autoCloseBrackets: true,
       gutters: ["CodeMirror-lint-markers"],
     };
-    let scopePropertiesToDraw = _.map(currentScope, (value, name) => {
-      return typeof value === "string" ? value.charCodeAt(0) : parseInt(value);
-    });
 
     // console.log(scopeHistory);
     return (
@@ -153,9 +155,10 @@ class App extends Component {
           isModalActive ? <Modal sharedCodeId={sharedCodeId} isActive={isModalActive} onModalCloseButtonClick={closeModal} /> : null
         }
         {
-          Object.values(currentScope).map((key, index) => (
-            <PtsCanvas className="pts-canvas" key={index} variable={key} operationType={operationType} />
-          ))
+          operationType !== "End" ? Object.values(_.mapValues(currentScope, (value, key) => ({ ...value, identifier: key }))).map((value, index) => (
+              <PtsCanvas className="pts-canvas" key={index} variable={value} operationType={operationType} />
+          )) :
+          null
         }
         <NavBar
           isRunning={isRunning}

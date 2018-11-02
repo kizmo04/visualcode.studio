@@ -322,6 +322,7 @@ export class InterpreterWrapper extends Interpreter {
     super(code, initFunc);
     this.code = code;
     this.scopeNames = ["Global"];
+    this.callee = ["window"];
   }
 
   nextStep() {
@@ -329,6 +330,16 @@ export class InterpreterWrapper extends Interpreter {
     const currentState = this.stateStack[this.stateStack.length - 1];
     const start = currentState.node.start;
     const end = currentState.node.end;
+    console.log('CURRENT STATE: ', currentState)
+
+    if (currentState.node.type === "Program" && currentState.done) {
+      return {
+        operationType: "End",
+        hasNextStep,
+        start,
+        end,
+      }
+    }
 
     if (currentState.func_) {
       const { name } = currentState.func_.node.id;
@@ -336,21 +347,23 @@ export class InterpreterWrapper extends Interpreter {
       console.log('NAME: ', name)
       return {
         currentScope: {
-          scopeName: this.scopeNames[this.scopeNames.length - 2],
+          scopeName: Object.keys(currentState.scope.properties).length ? this.scopeNames[this.scopeNames.length - 2] : null,
           ...currentState.scope.properties
         },
         // parent: currentState.scope.parentScope
         //   ? {
-        //       ...currentState.scope.parentScope.properties
-        //     }
-        //   : null,
-        operationType: currentState.node.type,
-        hasNextStep,
-        start,
-        end,
-      };
-    }
-    // if (currentState.node.type === "CallExpression" && currentState["doneCallee_"] && currentState.doneCallee_ === 1) {
+          //       ...currentState.scope.parentScope.properties
+          //     }
+          //   : null,
+          operationType: currentState.node.type,
+          hasNextStep,
+          start,
+          end,
+        };
+      } else if (currentState.node.callee && currentState.node.callee.object) {
+        this.callee.push(currentState.node.callee.object.name)
+      }
+      // if (currentState.node.type === "CallExpression" && currentState["doneCallee_"] && currentState.doneCallee_ === 1) {
     //   const { name } = currentState.node.callee;
     //   this.scopeNames.push(name);
     // }
@@ -361,8 +374,9 @@ export class InterpreterWrapper extends Interpreter {
     // ignore window properties
     return {
       currentScope: {
-        scopeName: this.scopeNames[this.scopeNames.length - 1],
-        ...currentState.scope.properties
+        scopeName: Object.keys(currentState.scope.properties).length ? this.scopeNames[this.scopeNames.length - 1] : null,
+        ...currentState.scope.properties,
+        this: this.callee[this.callee.length - 1]
       },
       // parent: currentState.scope.parentScope
       //   ? {
@@ -409,14 +423,18 @@ export function getHighlightOffset(charOffset, code) {
 
 export function getScopeProperties(scope) {
   const currentScope = {};
-  _.forOwn(scope, (value, key) => {
+  if (!scope.scopeName) return currentScope;
+  _.forIn(scope, (value, key) => {
     if (!ignoreWindowProperties.includes(key) && key !== scope.scopeName) {
       currentScope[key] = value;
       if (value && typeof value === "object") {
+        console.log('GET SCOPE PROP: ', scope)
+        console.log('KEYS: ', key)
         if (key === "this") {
+          console.log('if this: ')
           currentScope[key] = {
             type: 'Object',
-            value: value.parentScope ? "" : "window"
+            value: value.properties.window ? "window" : scope.scopeName
           };
         } else if (key === "arguments") {
           currentScope[key] = {
@@ -434,9 +452,18 @@ export function getScopeProperties(scope) {
             value: value.class
           };
         } else {
+          let obj = "{ ";
+          _.forOwn(value.properties, (value, key) => {
+            if (typeof value === 'number' || typeof value === 'string') {
+              obj += `${key}: ${value},\n`;
+            } else if (value.class) {
+              obj += `${key}: ${value.class},\n`;
+            }
+          });
+          obj += ' }'
           currentScope[key] = {
             type: typeof value.properties,
-            value: `${value.properties}`
+            value: `${obj}`
           };
         }
       } else {
@@ -458,6 +485,7 @@ export function getScopeProperties(scope) {
       type: "Object"
     };
   }
+  console.log('in get scope props: ', scope, currentScope);
 
   return currentScope;
 }
