@@ -31,7 +31,7 @@ ShallowWrapper {
         className="navbar-brand"
       >
         <div
-          className="navbar-item"
+          className="navbar-item has-text-info"
         >
           VisualCode.Studio
         </div>
@@ -112,7 +112,7 @@ ShallowWrapper {
       "props": Object {
         "children": Array [
           <div
-            className="navbar-item"
+            className="navbar-item has-text-info"
           >
             VisualCode.Studio
           </div>,
@@ -193,7 +193,7 @@ ShallowWrapper {
           "nodeType": "host",
           "props": Object {
             "children": "VisualCode.Studio",
-            "className": "navbar-item",
+            "className": "navbar-item has-text-info",
           },
           "ref": null,
           "rendered": "VisualCode.Studio",
@@ -507,7 +507,7 @@ ShallowWrapper {
           className="navbar-brand"
         >
           <div
-            className="navbar-item"
+            className="navbar-item has-text-info"
           >
             VisualCode.Studio
           </div>
@@ -588,7 +588,7 @@ ShallowWrapper {
         "props": Object {
           "children": Array [
             <div
-              className="navbar-item"
+              className="navbar-item has-text-info"
             >
               VisualCode.Studio
             </div>,
@@ -669,7 +669,7 @@ ShallowWrapper {
             "nodeType": "host",
             "props": Object {
               "children": "VisualCode.Studio",
-              "className": "navbar-item",
+              "className": "navbar-item has-text-info",
             },
             "ref": null,
             "rendered": "VisualCode.Studio",

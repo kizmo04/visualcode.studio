@@ -24,7 +24,7 @@ class NavBar extends Component {
     return (
       <nav className={`${styles.backgroundTransparent} navbar`}>
         <div className="navbar-brand">
-          <div className="navbar-item">VisualCode.Studio</div>
+          <div className="navbar-item has-text-info">VisualCode.Studio</div>
           <div className="navbar-item">
             <div className="field is-grouped">
               <div
