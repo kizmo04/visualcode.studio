@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import styles from "./NavBar.module.scss";
 
 class NavBar extends Component {
@@ -24,7 +25,11 @@ class NavBar extends Component {
     return (
       <nav className={`${styles.backgroundTransparent} navbar`}>
         <div className="navbar-brand">
-          <div className="navbar-item has-text-info">VisualCode.Studio</div>
+          <div className="navbar-item">
+            <Link to="/" className="subtitle has-text-info">
+              VisualCode.Studio
+            </Link>
+          </div>
           <div className="navbar-item">
             <div className="field is-grouped">
               <div
