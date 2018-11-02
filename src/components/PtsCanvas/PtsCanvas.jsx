@@ -11,6 +11,7 @@ import {
   Circle,
   Const,
   Line,
+  Color,
   CanvasForm,
   Rectangle,
   Polygon,
@@ -34,6 +35,8 @@ class PtsCanvas extends Component {
     this.chain = new Group();
     this.pts = null;
     this.temp = null;
+    this.variable = null;
+    this.isRotate = false;
   }
 
   drawCollinear(speed = 0.1) {
@@ -83,6 +86,7 @@ class PtsCanvas extends Component {
   }
 
   drawRectangle(stringLength) {
+    console.log('STRING LENGTH: ', stringLength)
     this.space = new CanvasSpace(this.canvasRef).setup({
       bgcolor: "transparent",
       resize: false,
@@ -93,7 +97,7 @@ class PtsCanvas extends Component {
 
     this.space.add({
       start: (bound, space) => {
-        this.world = new World(space.innerBound, 0.8, new Pt(0, 500));
+        this.world = new World(space.innerBound, 0.8, new Pt(0, 0));
 
         let unit = (space.size.x + space.size.y) / 150;
         this.square = Body.fromGroup(
@@ -105,6 +109,33 @@ class PtsCanvas extends Component {
         );
 
         this.world.add(this.square);
+
+        let min = 0;
+        let max = this.space.size.minValue().value;
+        let r1 = Math.floor(Math.random() * (max - min) + min);
+        let r2 = Math.floor(Math.random() * (max - min) + min);
+  
+        if (r1 % 2 === 0) {
+          r1 = -r1;
+        }
+        if (r2 % 2 === 0) {
+          r2 = -r2;
+        }
+        this.square[0].hit(Pt.make(2, r1, true), Pt.make(2, r2, true));
+        setInterval(() => {
+          let min = 0;
+          let max = this.space.size.minValue().value;
+          let r1 = Math.floor(Math.random() * (max - min) + min);
+          let r2 = Math.floor(Math.random() * (max - min) + min);
+    
+          if (r1 % 2 === 0) {
+            r1 = -r1;
+          }
+          if (r2 % 2 === 0) {
+            r2 = -r2;
+          }
+          this.square[0].hit(Pt.make(2, r1, true), Pt.make(2, r2, true));
+        }, 50);
       },
 
       animate: (time, ftime) => {
@@ -118,20 +149,20 @@ class PtsCanvas extends Component {
       }
     });
 
-    setInterval(() => {
-      let min = 0;
-      let max = this.space.size.minValue().value;
-      let r1 = Math.floor(Math.random() * (max - min) + min);
-      let r2 = Math.floor(Math.random() * (max - min) + min);
+    // setInterval(() => {
+    //   let min = 0;
+    //   let max = this.space.size.minValue().value;
+    //   let r1 = Math.floor(Math.random() * (max - min) + min);
+    //   let r2 = Math.floor(Math.random() * (max - min) + min);
 
-      if (r1 % 2 === 0) {
-        r1 = -r1;
-      }
-      if (r2 % 2 === 0) {
-        r2 = -r2;
-      }
-      this.square[0].hit(Pt.make(2, r1, true), Pt.make(2, r2, true));
-    }, 50);
+    //   if (r1 % 2 === 0) {
+    //     r1 = -r1;
+    //   }
+    //   if (r2 % 2 === 0) {
+    //     r2 = -r2;
+    //   }
+    //   this.square[0].hit(Pt.make(2, r1, true), Pt.make(2, r2, true));
+    // }, 50);
     this.space.play();
   }
 
@@ -189,7 +220,8 @@ class PtsCanvas extends Component {
     this.space.play();
   }
 
-  drawParticle() {
+  drawParticle(type) {
+    console.log('draw particle', type)
     this.space = new CanvasSpace(this.canvasRef).setup({
       bgcolor: "transparent",
       resize: false,
@@ -206,6 +238,36 @@ class PtsCanvas extends Component {
 
         this.poly = new Particle(new Pt(space.center.x, 100)).size(unit * 4);
         this.world.add(this.poly);
+
+        let min = 0;
+        let max = this.space.size.minValue().value;
+        let r1 = Math.floor(Math.random() * (max - min) + min);
+        let r2 = Math.floor(Math.random() * (max - min) + min);
+  
+        if (r1 % 2 === 0) {
+          r1 = -r1;
+        }
+        if (r2 % 2 === 0) {
+          r2 = -r2;
+        }
+  
+        this.poly.hit(r1, r2);
+
+        // setInterval(() => {
+        //   let min = 0;
+        //   let max = this.space.size.minValue().value;
+        //   let r1 = Math.floor(Math.random() * (max - min) + min);
+        //   let r2 = Math.floor(Math.random() * (max - min) + min);
+    
+        //   if (r1 % 2 === 0) {
+        //     r1 = -r1;
+        //   }
+        //   if (r2 % 2 === 0) {
+        //     r2 = -r2;
+        //   }
+    
+        //   this.poly.hit(r1, r2);
+        // }, 500);
       },
 
       animate: (time, ftime) => {
@@ -215,31 +277,49 @@ class PtsCanvas extends Component {
         this.world.drawParticles((p, i) =>
           this.form
             .fillOnly(
+              !type ?
               `rgba(${(50 + r) % 254},${(200 + r) % 254},${(150 + r) %
-                254},0.5)`
+                254},0.5)` : 
+              type === 'object' ? 'rgba(0, 200, 235, 0.6)' :
+              type === 'true' ? 'rgba(100, 0, 135, 0.6)' :
+              'rgba(240, 200, 0, 0.6)'
             )
-            .point(p, p.radius + p.radius * 0.2 * (r % 2 ? -1 : +1), "circle")
+            .point(p,!type ? p.radius + p.radius * 0.2 * (r % 2 ? -4 : +1) : p.radius * 0.8, type !== 'object' ? "circle" : "square")
         );
+
+        // let min = 0;
+        // let max = this.space.size.minValue().value;
+        let r1 = Math.floor(Math.random() * (max - min) + min);
+        let r2 = Math.floor(Math.random() * (max - min) + min);
+  
+        if (r1 % 2 === 0) {
+          r1 = -r1;
+        }
+        if (r2 % 2 === 0) {
+          r2 = -r2;
+        }
+  
+        this.poly.hit(r1, r2);
 
         this.world.update(ftime);
       }
     });
 
-    setInterval(() => {
-      let min = 0;
-      let max = this.space.size.minValue().value;
-      let r1 = Math.floor(Math.random() * (max - min) + min);
-      let r2 = Math.floor(Math.random() * (max - min) + min);
+    // setInterval(() => {
+    //   let min = 0;
+    //   let max = this.space.size.minValue().value;
+    //   let r1 = Math.floor(Math.random() * (max - min) + min);
+    //   let r2 = Math.floor(Math.random() * (max - min) + min);
 
-      if (r1 % 2 === 0) {
-        r1 = -r1;
-      }
-      if (r2 % 2 === 0) {
-        r2 = -r2;
-      }
+    //   if (r1 % 2 === 0) {
+    //     r1 = -r1;
+    //   }
+    //   if (r2 % 2 === 0) {
+    //     r2 = -r2;
+    //   }
 
-      this.poly.hit(r1, r2);
-    }, 500);
+    //   this.poly.hit(r1, r2);
+    // }, 500);
 
     this.space.play();
   }
@@ -253,14 +333,15 @@ class PtsCanvas extends Component {
 
     this.form = this.space.getForm();
 
-    length = length || 3;
+    length = length - 2 || 3;
 
     console.log("length: ", length);
 
     this.space.add({
       animate: (time, ftime) => {
-        if (this.chain.length > length && this.chain.length % 3 === 0)
+        if (this.chain.length > length && this.chain.length % 3 === 0) {
           this.chain.splice(0, 3);
+        }
         for (let i = 4, len = this.chain.length; i < len; i += 3) {
           this.chain[i].rotate2D(
             i % 7 === 0 ? 0.002 : -0.003,
@@ -308,7 +389,7 @@ class PtsCanvas extends Component {
           if (this.chain.length === 4) {
             this.chain.push(p);
             this.chain.q3.to(Geom.interpolate(this.chain.q1, this.chain.q2, 2));
-          } else if (this.chain.length > 4 && this.chain.length % 3 === 0) {
+          } else if (this.chain.length < 10 && this.chain.length % 3 === 0) {
             this.chain.push(p);
             this.chain.push(Geom.interpolate(this.chain.q2, this.chain.q1, 2));
           } else {
@@ -316,7 +397,7 @@ class PtsCanvas extends Component {
           }
         }
       }
-    }, 50);
+    }, 500);
     this.space.play();
   }
 
@@ -329,22 +410,95 @@ class PtsCanvas extends Component {
       "DoWhileStatement",
       "WhileStatement"
     ];
-    if (loopStatement.includes(operationType)) {
-      this.drawCollinear(5);
+    if (loopStatement.includes(operationType) && variable.identifier === "scopeName") {
+      console.log('didmount rotate', variable)
+      if (!this.isRotate) {
+        this.isRotate = true;
+        this.space.removeAll();
+        this.drawCollinear(5);
+      }
     } else if (
-      variable.type === "Function" ||
-      operationType === "FunctionDeclaration"
+      variable.identifier === "scopeName" && variable.value !== "Global" &&
+      (operationType === "FunctionDeclaration" || operationType === "FunctionExpression")
     ) {
-      this.drawCollinear();
+      console.log('did mount: ', variable, operationType)
+      if (!Object.keys(this.space.players).length) this.drawCollinear();
     } else if (variable.type === "string") {
       this.drawRectangle(variable.value.length);
     } else if (variable.type === "number") {
-      this.drawPoly(variable.value);
+      this.drawPoly(parseInt(variable.value) < 3 ? 3 : variable.value);
     } else if (variable.type === "undefined") {
       this.drawParticle();
     } else if (variable.type === "Array" || variable.type === "ArrayLike") {
       this.drawCurve(variable.value.length);
+    } else if (variable.type === "Object") {
+      this.drawParticle('object');
+    } else if (variable.type === "boolean") {
+      if (variable.value === 'true') {
+        this.drawParticle('true');
+      } else {
+        this.drawParticle('false')
+      }
     }
+    this.variable = variable;
+  }
+
+  componentDidUpdate (prevProps) {
+    const { variable, operationType } = this.props;
+    console.log('OPERATION TYPE: ', operationType)
+    const loopStatement = [
+      "ForStatement",
+      "ForInStatement",
+      "DoWhileStatement",
+      "WhileStatement"
+    ];
+
+    if (loopStatement.includes(operationType) && prevProps.variable.identifier === "scopeName" && variable.identifier === "scopeName" && prevProps.variable.value === variable.value) {
+      console.log('in loop statement: ', prevProps)
+      console.log('in loop this: ', this.props)
+      console.log('space before', this.space)
+      // this.space.removeAll();
+      console.log('space after', this.space)
+      if (!this.isRotate) {
+        this.space.removeAll();
+        this.isRotate = true;
+        this.drawCollinear(5);
+      }
+      this.isRotate = true;
+    } else if (prevProps.variable.identifier === variable.identifier && prevProps.variable.value !== variable.value) {
+      console.log('prev props: ', prevProps.variable)
+      console.log('different props: ', variable)
+      console.log('this.space', this.space)
+      if (this.space) this.space.removeAll();
+
+      if (
+        prevProps.variable.identifier === "scopeName" ||
+        operationType === "FunctionDeclaration"
+      ) {
+        console.log('draw coll: ', this.props)
+        if (!Object.keys(this.space.players).length) this.drawCollinear();
+      } else if (variable.type === "string") {
+        this.drawRectangle(variable.value.length);
+      } else if (variable.type === "number") {
+        this.drawPoly(parseInt(variable.value) < 3 ? 3 : variable.value);
+      } else if (variable.type === "undefined") {
+        this.drawParticle();
+      } else if (variable.type === "Array" || variable.type === "ArrayLike") {
+        console.log('curve prev update: ', prevProps)
+        console.log('curve this.props', this.props)
+        this.drawCurve(variable.value.length);
+      } else if (variable.type === "Object") {
+        this.drawParticle('object');
+      } else if (variable.type === "boolean") {
+        if (variable.value === 'true') {
+          this.drawParticle('true');
+        } else {
+          this.drawParticle('false')
+        }
+      }
+      this.variable = variable;
+    }
+
   }
 
   // componentDidMount() {
