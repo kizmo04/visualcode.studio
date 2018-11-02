@@ -235,7 +235,7 @@ describe('reducer', () => {
         },
         {
           scopeHistory: [],
-          currentScope: bubbleScope
+          currentScope: _.mapValues(bubbleScope, (value, key) => ({...value, highlight: false}))
         },
         currentScopeUpdated(bubbleScope)
       );
@@ -264,7 +264,6 @@ describe('reducer', () => {
 
     it("should pop scope history if and only if scope history length is greater than 0 and current scope's name is same as last history", () => {
       const defaultState = deepFreeze(_.cloneDeep(initialState));
-
       const actionGlobal = deepFreeze(currentScopeUpdated(globalScope));
       const updatedGlobal = deepFreeze(reducer(defaultState, actionGlobal));
       const actionQuick = deepFreeze(currentScopeUpdated(quickScope));

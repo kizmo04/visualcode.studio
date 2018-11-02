@@ -26,7 +26,7 @@ export const initialState = {
 
 const reducer = (state = initialState, action) => {
   const newScopeHistory = _.cloneDeep(state.scopeHistory);
-  const newCurrentScope = _.cloneDeep(state.currentScope);
+  const newCurrentScope = _.cloneDeep(action.currentScope);
   switch (action.type) {
     case CODE_SHARED:
       return Object.assign({}, state, {
@@ -37,18 +37,20 @@ const reducer = (state = initialState, action) => {
         code: action.code,
       });
     case CURRENT_SCOPE_UPDATED:
-      if (state.currentScope.scopeName) {
+      // const newCurrentScope = _.cloneDeep(action.currentScope);
+      if (Object.keys(action.currentScope).length) {
         _.forOwn(action.currentScope, (propBody, propName) => {
           if (state.currentScope[propName] && state.currentScope[propName].value !== propBody.value) {
-            propBody.highlight = true;
+            newCurrentScope[propName].highlight = true;
           } else {
-            propBody.highlight = false;
+            newCurrentScope[propName].highlight = false;
           }
         });
       }
-      if (!state.currentScope.scopeName || state.currentScope.scopeName.value === action.currentScope.scopeName.value) {
+
+      if (!Object.keys(state.currentScope).length || (state.currentScope.scopeName && state.currentScope.scopeName.value === action.currentScope.scopeName.value)) {
         return Object.assign({}, state, {
-          currentScope: _.assign({}, state.currentScope, action.currentScope),
+          currentScope: _.assign({}, newCurrentScope),
         });
       } else if (
         state.scopeHistory.length && state.scopeHistory[state.scopeHistory.length - 1].scopeName.value ===
@@ -57,12 +59,12 @@ const reducer = (state = initialState, action) => {
         newScopeHistory.pop();
         return Object.assign({}, state, {
           scopeHistory: [...newScopeHistory],
-          currentScope: _.assign({}, state.currentScope, action.currentScope),
+          currentScope: _.assign({}, newCurrentScope),
         });
       } else {
         return Object.assign({}, state, {
-          scopeHistory: [...state.scopeHistory, newCurrentScope],
-          currentScope: _.assign({}, state.currentScope, action.currentScope),
+          scopeHistory: [...state.scopeHistory, state.currentScope],
+          currentScope: _.assign({}, newCurrentScope),
         });
       }
     case NEXT_STEP_DECIDED:
@@ -87,6 +89,7 @@ const reducer = (state = initialState, action) => {
       });
     case INTERPRETER_STATE_RESET:
       return Object.assign({}, state, {
+        scopeHistory: action.scopeHistory,
         currentScope: action.currentScope,
         hasNextStep: action.hasNextStep,
         operationType: action.operationType,
