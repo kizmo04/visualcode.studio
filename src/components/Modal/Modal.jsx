@@ -32,8 +32,10 @@ class Modal extends Component {
                   <p className={styles.fontInfoSubTitle}>타입 별 형태</p>
                   <p className={styles.fontInfo}>Array or ArrayLike: length에 따라 길이가 다른 긴 줄</p>
                   <p className={styles.fontInfo}>undefined: 크기와 색상이 정해지지 않은 원</p>
-                  <p className={styles.fontInfo}>string: length에 따라 width가 다른 직사각형</p>
-                  <p className={styles.fontInfo}>number: value에 따른 n각형(3 미만의 값은 삼각형)</p>
+                  <p className={styles.fontInfo}>String: length에 따라 width가 다른 직사각형</p>
+                  <p className={styles.fontInfo}>Number: value에 따른 n각형(3 미만의 값은 삼각형)</p>
+                  <p className={styles.fontInfo}>Boolean: true - 보라색 원, false - 노란색 원</p>
+                  <p className={styles.fontInfo}>Object: 하늘색 사각형</p>
                 </div>
               }
             </div>
