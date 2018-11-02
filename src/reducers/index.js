@@ -31,6 +31,7 @@ const reducer = (state = initialState, action) => {
     case CODE_SHARED:
       return Object.assign({}, state, {
         sharedCodeId: action.sharedCodeId,
+        isModalActive: action.isModalActive,
       });
     case CODE_CHANGED:
       return Object.assign({}, state, {
