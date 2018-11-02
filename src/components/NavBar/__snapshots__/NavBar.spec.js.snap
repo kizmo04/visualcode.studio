@@ -31,9 +31,15 @@ ShallowWrapper {
         className="navbar-brand"
       >
         <div
-          className="navbar-item has-text-info"
+          className="navbar-item"
         >
-          VisualCode.Studio
+          <Link
+            className="subtitle has-text-info"
+            replace={false}
+            to="/"
+          >
+            VisualCode.Studio
+          </Link>
         </div>
         <div
           className="navbar-item"
@@ -112,9 +118,15 @@ ShallowWrapper {
       "props": Object {
         "children": Array [
           <div
-            className="navbar-item has-text-info"
+            className="navbar-item"
           >
-            VisualCode.Studio
+            <Link
+              className="subtitle has-text-info"
+              replace={false}
+              to="/"
+            >
+              VisualCode.Studio
+            </Link>
           </div>,
           <div
             className="navbar-item"
@@ -192,11 +204,30 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "host",
           "props": Object {
-            "children": "VisualCode.Studio",
-            "className": "navbar-item has-text-info",
+            "children": <Link
+              className="subtitle has-text-info"
+              replace={false}
+              to="/"
+            >
+              VisualCode.Studio
+            </Link>,
+            "className": "navbar-item",
           },
           "ref": null,
-          "rendered": "VisualCode.Studio",
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "class",
+            "props": Object {
+              "children": "VisualCode.Studio",
+              "className": "subtitle has-text-info",
+              "replace": false,
+              "to": "/",
+            },
+            "ref": null,
+            "rendered": "VisualCode.Studio",
+            "type": [Function],
+          },
           "type": "div",
         },
         Object {
@@ -507,9 +538,15 @@ ShallowWrapper {
           className="navbar-brand"
         >
           <div
-            className="navbar-item has-text-info"
+            className="navbar-item"
           >
-            VisualCode.Studio
+            <Link
+              className="subtitle has-text-info"
+              replace={false}
+              to="/"
+            >
+              VisualCode.Studio
+            </Link>
           </div>
           <div
             className="navbar-item"
@@ -588,9 +625,15 @@ ShallowWrapper {
         "props": Object {
           "children": Array [
             <div
-              className="navbar-item has-text-info"
+              className="navbar-item"
             >
-              VisualCode.Studio
+              <Link
+                className="subtitle has-text-info"
+                replace={false}
+                to="/"
+              >
+                VisualCode.Studio
+              </Link>
             </div>,
             <div
               className="navbar-item"
@@ -668,11 +711,30 @@ ShallowWrapper {
             "key": undefined,
             "nodeType": "host",
             "props": Object {
-              "children": "VisualCode.Studio",
-              "className": "navbar-item has-text-info",
+              "children": <Link
+                className="subtitle has-text-info"
+                replace={false}
+                to="/"
+              >
+                VisualCode.Studio
+              </Link>,
+              "className": "navbar-item",
             },
             "ref": null,
-            "rendered": "VisualCode.Studio",
+            "rendered": Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "class",
+              "props": Object {
+                "children": "VisualCode.Studio",
+                "className": "subtitle has-text-info",
+                "replace": false,
+                "to": "/",
+              },
+              "ref": null,
+              "rendered": "VisualCode.Studio",
+              "type": [Function],
+            },
             "type": "div",
           },
           Object {
