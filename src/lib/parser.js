@@ -1,6 +1,26 @@
 import Interpreter from "./interpreter";
 import _ from "lodash";
-import TYPE from "../constants/parser";
+import {
+  BINARY_EXPRESSION,
+  IDENTIFIER,
+  LITERAL,
+  ARRAY_EXPRESSION,
+  VARIABLE_DECLARATION,
+  CREATION,
+  VARIABLE_DECLARATOR,
+  EXCUTION,
+  MEMBER_EXPRESSION,
+  UPDATE_EXPRESSION,
+  EXCUTION_LOOP,
+  FOR_STATEMENT,
+  EXCUTION_LOOP_BEGIN,
+  IF_STATEMENT,
+  CONDITIONAL_EXPRESSION,
+  EXCUTION_IF,
+  BLOCK_STATEMENT,
+  ASSIGNMENT_EXPRESSION,
+  EXPRESSION_STATEMENT,
+} from "../constants/parser";
 
 const ignoreWindowProperties = [
   "window",
@@ -39,17 +59,17 @@ const ignoreWindowProperties = [
 
 function nodeToString(node) {
   switch (node.type) {
-    case TYPE.BINARY_EXPRESSION:
+    case BINARY_EXPRESSION:
       return `${nodeToString(node.left)} ${node.operator} ${nodeToString(
         node.right
       )}`;
-    case TYPE.IDENTIFIER:
+    case IDENTIFIER:
       return node.name;
-    case TYPE.LITERAL:
+    case LITERAL:
       return typeof node.value === "string"
         ? node.value
         : node.value.toString();
-    case TYPE.ARRAY_EXPRESSION:
+    case ARRAY_EXPRESSION:
       return `[${node.elements.map(node => parseNode(node))}]`;
     default:
       break;
@@ -59,25 +79,25 @@ function nodeToString(node) {
 function parseNode(state) {
   const node = state.node;
   switch (node.type) {
-    case TYPE.LITERAL:
+    case LITERAL:
       return node.value;
-    case TYPE.ARRAY_EXPRESSION:
+    case ARRAY_EXPRESSION:
       return node.elements.map(node => parseNode(node));
-    case TYPE.IDENTIFIER:
+    case IDENTIFIER:
       return node.name;
-    case TYPE.VARIABLE_DECLARATION:
+    case VARIABLE_DECLARATION:
       return {
-        type: TYPE.CREATION,
+        type: CREATION,
         kind: node.kind,
         declarations: parseNode(node.declarations.map(node => parseNode(node)))
       };
-    case TYPE.VARIABLE_DECLARATOR:
+    case VARIABLE_DECLARATOR:
       return {
-        type: TYPE.EXCUTION,
+        type: EXCUTION,
         initValue: node.init instanceof Node ? parseNode(node.init) : node.init,
         name: parseNode(node.id)
       };
-    case TYPE.MEMBER_EXPRESSION:
+    case MEMBER_EXPRESSION:
       const key = `${nodeToString(node.object)}[${nodeToString(
         node.property
       )}]`;
@@ -90,14 +110,14 @@ function parseNode(state) {
       return {
         name: key
       };
-    case TYPE.BINARY_EXPRESSION:
+    case BINARY_EXPRESSION:
       if (state["doneRight_"]) {
         const result = eval(
           `${state.leftValue_} ${node.operator} ${state.value}`
         );
         return {
           result,
-          type: TYPE.EXCUTION,
+          type: EXCUTION,
           left: parseNode(node.left),
           right: parseNode(node.right),
           operator: node.operator,
@@ -106,7 +126,7 @@ function parseNode(state) {
         };
       } else if (state["doneLeft_"]) {
         return {
-          type: TYPE.EXCUTION,
+          type: EXCUTION,
           left: parseNode(node.left),
           right: parseNode(node.right),
           operator: node.operator,
@@ -114,14 +134,14 @@ function parseNode(state) {
         };
       }
       break;
-    case TYPE.UPDATE_EXPRESSION:
+    case UPDATE_EXPRESSION:
       return {
-        type: TYPE.EXCUTION_LOOP,
+        type: EXCUTION_LOOP,
         argument: parseNode(node.argument),
         operator: node.operator,
         prefix: node.prefix
       };
-    case TYPE.FOR_STATEMENT:
+    case FOR_STATEMENT:
       if (state["mode_"] === 1) {
         //for 시작
       } else if (state["mode_"] === 2) {
@@ -130,40 +150,40 @@ function parseNode(state) {
         // update 실행
       }
       return {
-        type: TYPE.EXCUTION_LOOP_BEGIN,
+        type: EXCUTION_LOOP_BEGIN,
         init: parseNode(node.init),
         test: parseNode(node.test),
         update: parseNode(node.update)
       };
-    case TYPE.IF_STATEMENT || TYPE.CONDITIONAL_EXPRESSION:
+    case IF_STATEMENT || CONDITIONAL_EXPRESSION:
       if (state["mode_"] === 1) {
         // 시작
       } else if (state["mode_"] === 2) {
       } else if (state["mode_"] === 3) {
       }
       return {
-        type: TYPE.EXCUTION_IF,
+        type: EXCUTION_IF,
         test: parseNode(node.test)
         // consequent,
       };
-    case TYPE.BLOCK_STATEMENT:
+    case BLOCK_STATEMENT:
       return {
         node
       };
-    case TYPE.EXPRESSION_STATEMENT:
+    case EXPRESSION_STATEMENT:
       if (node["done_"]) {
         return {
-          type: TYPE.EXCUTION,
+          type: EXCUTION,
           done: true,
           value: node.value
         };
       } else {
         return {
-          type: TYPE.EXCUTION,
+          type: EXCUTION,
           done: false
         };
       }
-    case TYPE.ASSIGNMENT_EXPRESSION:
+    case ASSIGNMENT_EXPRESSION:
       if (node["doneRight_"]) {
         return {
           left: node.leftReference_[node.leftReference_.length - 1],
