@@ -38,7 +38,9 @@ class NavBar extends Component {
                 } button is-white is-small info-button`}
                 onClick={this.handleInfoButtonClick}
               >
-                <i className={`${styles.icon} material-icons has-text-info`}>help_outline</i>
+                <i className={`${styles.icon} material-icons has-text-info`}>
+                  help_outline
+                </i>
               </div>
               <div
                 className={`${

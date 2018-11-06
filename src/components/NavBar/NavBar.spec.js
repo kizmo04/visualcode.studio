@@ -18,9 +18,7 @@ const setup = (setupProps = {}) => {
     onChangeSpy: jest.spyOn(NavBar.prototype, "handleInputRangeChange")
   };
   const props = { ...defaultProps, ...setupProps };
-  const component = shallow(
-    <NavBar {...props} />
-  );
+  const component = shallow(<NavBar {...props} />);
 
   return {
     component,
@@ -30,7 +28,6 @@ const setup = (setupProps = {}) => {
 };
 
 describe("NavBar", () => {
-
   it("renders without crashing", () => {
     const { component } = setup();
 
@@ -38,7 +35,6 @@ describe("NavBar", () => {
   });
 
   describe("with props", () => {
-
     it("first render run button should contain 'run'", () => {
       const { component } = setup();
 
@@ -55,7 +51,6 @@ describe("NavBar", () => {
   });
 
   describe("events", () => {
-
     it("onClick calls onRunButtonClick", () => {
       const { component, props } = setup();
 

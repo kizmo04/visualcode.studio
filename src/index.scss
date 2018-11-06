@@ -5,13 +5,13 @@ $breadcrumb-item-separator-color: transparent;
 
 #root {
   padding-top: 0;
-  background-color: #0C0C0D;
+  background-color: #0c0c0d;
   position: absolute;
   z-index: -10;
   width: 100%;
   min-height: 100%;
 }
 
-input[type=range].slider.is-fullwidth.is-info {
+input[type="range"].slider.is-fullwidth.is-info {
   margin: 0 1rem 0 0;
 }

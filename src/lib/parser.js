@@ -1,27 +1,6 @@
 import Interpreter from "./interpreter";
 import _ from "lodash";
-
-// global to ignore
-const LITERAL = "Literal";
-const ARRAY_EXPRESSION = "ArrayExpression";
-const IDENTIFIER = "Identifier";
-const VARIABLE_DECLARATOR = "VariableDeclarator";
-const VARIABLE_DECLARATION = "VariableDeclaration";
-const BINARY_EXPRESSION = "BinaryExpression";
-const CREATION = "CREATION";
-const EXCUTION = "EXCUTION";
-const EXCUTION_IF = "EXCUTION_IF";
-const EXCUTION_LOOP = "EXCUTION_LOOP";
-const EXCUTION_LOOP_BEGIN = "EXCUTION_LOOP_BEGIN";
-const EXPRESSION_STATEMENT = "ExpressionStatement";
-
-const BLOCK_STATEMENT = "BlockStatement";
-const IF_STATEMENT = "IfStatement";
-const CONDITIONAL_EXPRESSION = "ConditionalExpression";
-const UPDATE_EXPRESSION = "UpdateExpression";
-const MEMBER_EXPRESSION = "MemberExpression";
-const FOR_STATEMENT = "ForStatement";
-const ASSIGNMENT_EXPRESSION = "AssignmentExpression";
+import TYPE from "../constants/parser";
 
 const ignoreWindowProperties = [
   "window",
@@ -58,81 +37,19 @@ const ignoreWindowProperties = [
   "setTimeout",
 ];
 
-const mapPropsStepFunctionKeys = node => ({
-  ArrayExpression: {},
-  BinaryExpression: {},
-  AssignmentExpression: {},
-  CallExpression: {
-    callee: parseNode(node.callee),
-    arguments: parseNode(node.arguments.map(node => parseNode(node)))
-  },
-  IfStatement: {},
-  ForStatement: {
-    init: parseNode(node.init),
-    test: parseNode(node.test),
-    update: parseNode(node.update)
-  },
-  BlockStatement: {},
-  BreakStatement: {},
-  FunctionDeclaration: {
-    name: node.id.name,
-    params: node.params.map(node => node.name)
-  },
-  CatchClause: {},
-  ConditionalExpression: {},
-  ContinueStatement: {},
-  DebuggerStatement: {},
-  DoWhileStatement: {
-    test: parseNode(node.test)
-  },
-  EmptyStatement: {},
-  EvalProgram_: {},
-  ExpressionStatement: {
-    type: node.expression.type,
-    callee: node.expression.callee.name
-    // arguments: node.expression.arguments.map(node => )
-  },
-  ForInStatement: {},
-  FunctionExpression: {},
-  Identifier: {},
-  LabeledStatement: {},
-  Literal: {},
-  LogicalExpression: {},
-  MemberExpression: {},
-  NewExpression: {},
-  ObjectExpression: {},
-  Program: {
-    // state에 done: boolean 이 있음
-  },
-  ReturnStatement: {},
-  SequenceExpression: {},
-  SwitchStatement: {},
-  ThisExpression: {},
-  ThrowStatement: {},
-  TryStatement: {},
-  UnaryExpression: {},
-  UpdateExpression: {},
-  VariableDeclaration: {
-    kind: node.kind,
-    declarations: parseNode(node.declarations.map(node => parseNode(node)))
-  },
-  WithStatement: {},
-  WhileStatement: {},
-});
-
 function nodeToString(node) {
   switch (node.type) {
-    case BINARY_EXPRESSION:
+    case TYPE.BINARY_EXPRESSION:
       return `${nodeToString(node.left)} ${node.operator} ${nodeToString(
         node.right
       )}`;
-    case IDENTIFIER:
+    case TYPE.IDENTIFIER:
       return node.name;
-    case LITERAL:
+    case TYPE.LITERAL:
       return typeof node.value === "string"
         ? node.value
         : node.value.toString();
-    case ARRAY_EXPRESSION:
+    case TYPE.ARRAY_EXPRESSION:
       return `[${node.elements.map(node => parseNode(node))}]`;
     default:
       break;
@@ -142,115 +59,115 @@ function nodeToString(node) {
 function parseNode(state) {
   const node = state.node;
   switch (node.type) {
-    case LITERAL:
+    case TYPE.LITERAL:
       return node.value;
-    case ARRAY_EXPRESSION:
+    case TYPE.ARRAY_EXPRESSION:
       return node.elements.map(node => parseNode(node));
-    case IDENTIFIER:
+    case TYPE.IDENTIFIER:
       return node.name;
-    case VARIABLE_DECLARATION:
+    case TYPE.VARIABLE_DECLARATION:
       return {
-        type: CREATION,
+        type: TYPE.CREATION,
         kind: node.kind,
-        declarations: parseNode(node.declarations.map(node => parseNode(node))),
+        declarations: parseNode(node.declarations.map(node => parseNode(node)))
       };
-    case VARIABLE_DECLARATOR:
+    case TYPE.VARIABLE_DECLARATOR:
       return {
-        type: EXCUTION,
+        type: TYPE.EXCUTION,
         initValue: node.init instanceof Node ? parseNode(node.init) : node.init,
-        name: parseNode(node.id),
+        name: parseNode(node.id)
       };
-    case MEMBER_EXPRESSION:
+    case TYPE.MEMBER_EXPRESSION:
       const key = `${nodeToString(node.object)}[${nodeToString(
         node.property
       )}]`;
       if (node.computed) {
         return {
           name: key,
-          value: state.value,
+          value: state.value
         };
       }
       return {
-        name: key,
+        name: key
       };
-    case BINARY_EXPRESSION:
+    case TYPE.BINARY_EXPRESSION:
       if (state["doneRight_"]) {
         const result = eval(
           `${state.leftValue_} ${node.operator} ${state.value}`
         );
         return {
           result,
-          type: EXCUTION,
+          type: TYPE.EXCUTION,
           left: parseNode(node.left),
           right: parseNode(node.right),
           operator: node.operator,
           leftValue: state.leftValue_,
-          rightValue: state.value,
+          rightValue: state.value
         };
       } else if (state["doneLeft_"]) {
         return {
-          type: EXCUTION,
+          type: TYPE.EXCUTION,
           left: parseNode(node.left),
           right: parseNode(node.right),
           operator: node.operator,
-          leftValue: state.value,
+          leftValue: state.value
         };
       }
       break;
-    case UPDATE_EXPRESSION:
+    case TYPE.UPDATE_EXPRESSION:
       return {
-        type: EXCUTION_LOOP,
+        type: TYPE.EXCUTION_LOOP,
         argument: parseNode(node.argument),
         operator: node.operator,
-        prefix: node.prefix,
+        prefix: node.prefix
       };
-    case FOR_STATEMENT:
+    case TYPE.FOR_STATEMENT:
       if (state["mode_"] === 1) {
         //for 시작
       } else if (state["mode_"] === 2) {
-        // test 로 분기 -> 종료냐 body 실행이냐
+        // test 로 분기 -> 종료혹은 body 실행
       } else if (state["mode_"] === 3) {
         // update 실행
       }
       return {
-        type: EXCUTION_LOOP_BEGIN,
+        type: TYPE.EXCUTION_LOOP_BEGIN,
         init: parseNode(node.init),
         test: parseNode(node.test),
-        update: parseNode(node.update),
+        update: parseNode(node.update)
       };
-    case IF_STATEMENT || CONDITIONAL_EXPRESSION:
+    case TYPE.IF_STATEMENT || TYPE.CONDITIONAL_EXPRESSION:
       if (state["mode_"] === 1) {
         // 시작
       } else if (state["mode_"] === 2) {
       } else if (state["mode_"] === 3) {
       }
       return {
-        type: EXCUTION_IF,
-        test: parseNode(node.test),
+        type: TYPE.EXCUTION_IF,
+        test: parseNode(node.test)
         // consequent,
       };
-    case BLOCK_STATEMENT:
+    case TYPE.BLOCK_STATEMENT:
       return {
-        node,
+        node
       };
-    case EXPRESSION_STATEMENT:
+    case TYPE.EXPRESSION_STATEMENT:
       if (node["done_"]) {
         return {
-          type: EXCUTION,
+          type: TYPE.EXCUTION,
           done: true,
-          value: node.value,
+          value: node.value
         };
       } else {
         return {
-          type: EXCUTION,
-          done: false,
+          type: TYPE.EXCUTION,
+          done: false
         };
       }
-    case ASSIGNMENT_EXPRESSION:
+    case TYPE.ASSIGNMENT_EXPRESSION:
       if (node["doneRight_"]) {
         return {
           left: node.leftReference_[node.leftReference_.length - 1],
-          value: node.value,
+          value: node.value
         };
       } else if (node["nodeLeft_"]) {
       }
@@ -330,63 +247,47 @@ export class InterpreterWrapper extends Interpreter {
     const currentState = this.stateStack[this.stateStack.length - 1];
     const start = currentState.node.start;
     const end = currentState.node.end;
-    console.log('CURRENT STATE: ', currentState)
 
     if (currentState.node.type === "Program" && currentState.done) {
       return {
         operationType: "End",
         hasNextStep,
         start,
-        end,
-      }
+        end
+      };
     }
 
     if (currentState.func_) {
       const { name } = currentState.func_.node.id;
       this.scopeNames.push(name);
-      console.log('NAME: ', name)
       return {
         currentScope: {
-          scopeName: Object.keys(currentState.scope.properties).length ? this.scopeNames[this.scopeNames.length - 2] : null,
+          scopeName: Object.keys(currentState.scope.properties).length
+            ? this.scopeNames[this.scopeNames.length - 2]
+            : null,
           ...currentState.scope.properties
         },
-        // parent: currentState.scope.parentScope
-        //   ? {
-          //       ...currentState.scope.parentScope.properties
-          //     }
-          //   : null,
-          operationType: currentState.node.type,
-          hasNextStep,
-          start,
-          end,
-        };
-      } else if (currentState.node.callee && currentState.node.callee.object) {
-        this.callee.push(currentState.node.callee.object.name)
-      }
-      // if (currentState.node.type === "CallExpression" && currentState["doneCallee_"] && currentState.doneCallee_ === 1) {
-    //   const { name } = currentState.node.callee;
-    //   this.scopeNames.push(name);
-    // }
+        operationType: currentState.node.type,
+        hasNextStep,
+        start,
+        end
+      };
+    } else if (currentState.node.callee && currentState.node.callee.object) {
+      this.callee.push(currentState.node.callee.object.name);
+    }
 
-    // if (currentState.node.type === "CallExpression" && currentState["doneCallee_"] && currentState.doneCallee_ === 2) {
-    //   this.scopeNames.pop();
-    // }
-    // ignore window properties
     return {
       currentScope: {
-        scopeName: Object.keys(currentState.scope.properties).length ? this.scopeNames[this.scopeNames.length - 1] : null,
+        scopeName: Object.keys(currentState.scope.properties).length
+          ? this.scopeNames[this.scopeNames.length - 1]
+          : null,
         ...currentState.scope.properties,
         this: this.callee[this.callee.length - 1]
       },
-      // parent: currentState.scope.parentScope
-      //   ? {
-      //       ...currentState.scope.parentScope.properties
-      //     }
-      //   : null,
       operationType: currentState.node.type,
       hasNextStep,
       start,
-      end,
+      end
     };
   }
 }
@@ -428,39 +329,36 @@ export function getScopeProperties(scope) {
     if (!ignoreWindowProperties.includes(key) && key !== scope.scopeName) {
       currentScope[key] = value;
       if (value && typeof value === "object") {
-        console.log('GET SCOPE PROP: ', scope)
-        console.log('KEYS: ', key)
         if (key === "this") {
-          console.log('if this: ')
           currentScope[key] = {
-            type: 'Object',
+            type: "Object",
             value: value.properties.window ? "window" : scope.scopeName
           };
         } else if (key === "arguments") {
           currentScope[key] = {
-            type: 'ArrayLike',
+            type: "ArrayLike",
             value: `${value.properties[0]}`
           };
         } else if (value.class === "Array") {
           currentScope[key] = {
-            type: 'Array',
+            type: "Array",
             value: arrayToString(value)
           };
         } else if (value.class === "Function") {
           currentScope[key] = {
-            type: 'Function',
+            type: "Function",
             value: value.class
           };
         } else {
           let obj = "{ ";
           _.forOwn(value.properties, (value, key) => {
-            if (typeof value === 'number' || typeof value === 'string') {
+            if (typeof value === "number" || typeof value === "string") {
               obj += `${key}: ${value},\n`;
             } else if (value.class) {
               obj += `${key}: ${value.class},\n`;
             }
           });
-          obj += ' }'
+          obj += " }";
           currentScope[key] = {
             type: typeof value.properties,
             value: `${obj}`
@@ -485,7 +383,6 @@ export function getScopeProperties(scope) {
       type: "Object"
     };
   }
-  console.log('in get scope props: ', scope, currentScope);
 
   return currentScope;
 }

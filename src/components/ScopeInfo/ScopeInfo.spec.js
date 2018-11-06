@@ -1,10 +1,8 @@
 import React from "react";
-import { shallow } from 'enzyme';
+import { shallow } from "enzyme";
 import ScopeInfo from "./ScopeInfo";
 
-
 describe("ScopeInfo", () => {
-
   const setup = (setupProps = {}) => {
     const defaultProps = {
       scopeHistory: [],
@@ -33,7 +31,6 @@ describe("ScopeInfo", () => {
   });
 
   describe("with scope props", () => {
-
     const firstProp = {
       scopeHistory: [],
       currentScope: {
@@ -56,19 +53,16 @@ describe("ScopeInfo", () => {
     const { component } = setup(firstProp);
 
     it("renders scope name", () => {
-
       expect(component).toMatchSnapshot();
       expect(component.find(".closure").text()).toContain("Global");
     });
 
     it("renders scope properties", () => {
-
       expect(component.find(".property").length).toBe(2);
     });
 
     it("renders operation type", () => {
-
-      expect(component.find(".operation-type").text()).toBe("Program")
+      expect(component.find(".operation-type").text()).toBe("Program");
     });
   });
 });

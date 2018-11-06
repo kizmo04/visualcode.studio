@@ -5,7 +5,7 @@ import _ from "lodash";
 import {
   getScopeProperties,
   initFunc,
-  InterpreterWrapper,
+  InterpreterWrapper
 } from "../../lib/parser";
 import { Highlighter } from "../../lib/editor";
 import { getCodeUpstream, setCodeUptream } from "../../lib/firebase";
@@ -51,7 +51,7 @@ class App extends Component {
       decideNextStep,
       stopInterpreter,
       isRunning,
-      resetInterpreterState,
+      resetInterpreterState
     } = this.props;
     try {
       if (!this._interpreter || this._interpreter.code !== code) {
@@ -103,7 +103,7 @@ class App extends Component {
       runInterpreter,
       hasNextStep,
       isRunning,
-      runningSpeed,
+      runningSpeed
     } = this.props;
     if (!isRunning && hasNextStep) {
       runInterpreter();
@@ -134,7 +134,7 @@ class App extends Component {
       sharedCodeId,
       isModalActive,
       closeModal,
-      openInfoModal,
+      openInfoModal
     } = this.props;
     const options = {
       mode: "javascript",
@@ -145,21 +145,33 @@ class App extends Component {
       tabSize: 2,
       lintOnChange: false,
       autoCloseBrackets: true,
-      gutters: ["CodeMirror-lint-markers"],
+      gutters: ["CodeMirror-lint-markers"]
     };
 
-    // console.log(scopeHistory);
     return (
       <Fragment>
-        {
-          isModalActive ? <Modal sharedCodeId={sharedCodeId} isActive={isModalActive} onModalCloseButtonClick={closeModal} /> : null
-        }
-        {
-          operationType !== "End" ? Object.values(_.mapValues(currentScope, (value, key) => ({ ...value, identifier: key }))).map((value, index) => (
-              <PtsCanvas className="pts-canvas" key={index} variable={value} operationType={operationType} />
-          )) :
-          null
-        }
+        {isModalActive ? (
+          <Modal
+            sharedCodeId={sharedCodeId}
+            isActive={isModalActive}
+            onModalCloseButtonClick={closeModal}
+          />
+        ) : null}
+        {operationType !== "End"
+          ? Object.values(
+              _.mapValues(currentScope, (value, key) => ({
+                ...value,
+                identifier: key
+              }))
+            ).map((value, index) => (
+              <PtsCanvas
+                className="pts-canvas"
+                key={index}
+                variable={value}
+                operationType={operationType}
+              />
+            ))
+          : null}
         <NavBar
           isRunning={isRunning}
           hasNextStep={hasNextStep}
@@ -193,7 +205,6 @@ class App extends Component {
               <Route
                 path={`/:code_id`}
                 render={({ match }) => {
-                  console.log('MATCH: ', match)
                   getCodeUpstream(match.params.code_id, setChangedCode);
                   return (
                     <CodeMirror
