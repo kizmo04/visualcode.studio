@@ -24,7 +24,7 @@ npm start
 - [JS-Interpreter](https://github.com/NeilFraser/JS-Interpreter)을 이용한 line by line 코드 실행
 - Codemirror를 이용한 Code Editor
 - 스크립트에서 실행되고 있는 line은 하이라이트 효과
-- 실행중인 line의 Closure Excution Context를 실시간 Logging
+- 실행중인 line의 Closure Execution Context를 실시간 Logging
 - Context의 Value에 변동이 있을 경우(재할당) Log에서 붉은 색 하이라이트 효과
 - [Pts.js](https://ptsjs.org)을 이용해 실행중인 line의 Closure Excution Context를 애니메이션으로 시각화
   - Function Declaration, Function Expression 시 Function을 Background Animation 으로 표현
