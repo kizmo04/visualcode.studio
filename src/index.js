@@ -17,9 +17,11 @@ import { JSHINT } from "jshint";
 window.JSHINT = JSHINT;
 
 const history = createBrowserHistory();
+const middlewares = process.env.NODE_ENV === "development" ? [routerMiddleware(history), logger] : [routerMiddleware(history)];
+
 export const store = createStore(
   connectRouter(history)(reducer),
-  compose(applyMiddleware(routerMiddleware(history), logger))
+  compose(applyMiddleware(...middlewares))
 );
 
 render(
