@@ -1,6 +1,6 @@
 # Visual Code.Studio
 
-![](README.assets/visualcode-studio.gif)
+![](README.assets/visualcode.studio.gif)
 
 [YouTube 데모](https://youtu.be/tiP9faHD5Zc)
 
@@ -127,5 +127,5 @@ Higher Order Function이 포함된 스크립트의 실행이 어려워졌습니�
 
 [Ken Huh](https://github.com/Ken123777) / Vanilla Coding
 
-[DDODY](https://github.com/DDODY)
+[DDody](https://github.com/DDODY)
 
