@@ -6,19 +6,6 @@
 
 "visual code.studio"는 [JS-Interpreter](https://github.com/NeilFraser/JS-Interpreter)를 활용한 Javascript 코드 시각화 어플리케이션 입니다.
 
-> ### JS-Interpreter Restriction
->
-> The version of JavaScript implemented by the interpreter has a few differences from that which executes in a browser:
->
-> - API
->   None of the DOM APIs are exposed. That's kind of the point of a sandbox. If you need these, write your own interfaces.
-> - ES6
->   More recent additions to JavaScript such as let or Set aren't implemented. Feel free to fork the project if you need more than ES5.
-> - toString & valueOf
->   User-created functions are not called when casting objects to primitives.
-> - Performance
->   The interpreter is not particularly efficient. It currently runs about 200 times slower than native JavaScript.
-
 
 
 ## Installation
@@ -94,6 +81,21 @@ npm start
 
 프로젝트에 사용한 [Interpreter의 설계상 제약](https://github.com/NeilFraser/JS-Interpreter/issues/130)으로
 
+> ### JS-Interpreter Restriction
+>
+> The version of JavaScript implemented by the interpreter has a few differences from that which executes in a browser:
+>
+> - API
+>   None of the DOM APIs are exposed. That's kind of the point of a sandbox. If you need these, write your own interfaces.
+> - ES6
+>   More recent additions to JavaScript such as let or Set aren't implemented. Feel free to fork the project if you need more than ES5.
+> - toString & valueOf
+>   User-created functions are not called when casting objects to primitives.
+> - Performance
+>   The interpreter is not particularly efficient. It currently runs about 200 times slower than native JavaScript.
+
+> ### [External Higher Order Functions #130](https://github.com/NeilFraser/JS-Interpreter/issues/130)
+>
 > this is a limitation of the interpreter, it is *really* hard for external JavaScript to initiate a callback into the interpreter. The solution is to move the higher order function into the interpreted code.
 
 Higher Order Function이 포함된 스크립트의 실행이 어려워졌습니다. 초기 프로젝트 일정 상 기능 구현에 할애할 수 있는 시간이 10여일뿐이었고, 프로젝트 진행 중반에 발견된 이슈였습니다. 초기에 설정한 프로젝트 일정 계획을 지키는 것을 우선으로 했기때문에, Higher Order Function 실행이 가능하도록 Interpreter를 수정하는 일은 추후에 실행할 2차 Task로 설정했습니다. 
@@ -114,7 +116,7 @@ Higher Order Function이 포함된 스크립트의 실행이 어려워졌습니�
 
 ### 4. Etc
 
-- Seperate Concerns
+- Seperation of Concerns
 - Integration Test
 - Customizing Interpreter
 - Animation
@@ -124,3 +126,6 @@ Higher Order Function이 포함된 스크립트의 실행이 어려워졌습니�
 ### Sincere Thanks
 
 [Ken Huh](https://github.com/Ken123777) / Vanilla Coding
+
+[DDODY](https://github.com/DDODY)
+
