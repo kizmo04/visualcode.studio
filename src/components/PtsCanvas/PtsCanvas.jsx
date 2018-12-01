@@ -143,7 +143,11 @@ class PtsCanvas extends Component {
     this.space.play();
   }
 
-  drawPoly(number) {
+  drawPoly(value) {
+    const number = Number(value) < 3 ? 3 :
+    Number(value) > 100 ? 100 :
+    Number(value);
+
     this.space = new CanvasSpace(this.canvasRef).setup({
       bgcolor: "transparent",
       resize: false,
@@ -374,7 +378,7 @@ class PtsCanvas extends Component {
     } else if (variable.type === "string") {
       this.drawRectangle(variable.value.length);
     } else if (variable.type === "number") {
-      this.drawPoly(parseInt(variable.value) < 3 ? 3 : variable.value);
+      this.drawPoly(variable.value);
     } else if (variable.type === "undefined") {
       this.drawParticle();
     } else if (variable.type === "Array" || variable.type === "ArrayLike") {
@@ -426,7 +430,7 @@ class PtsCanvas extends Component {
       } else if (variable.type === "string") {
         this.drawRectangle(variable.value.length);
       } else if (variable.type === "number") {
-        this.drawPoly(parseInt(variable.value) < 3 ? 3 : variable.value);
+        this.drawPoly(variable.value);
       } else if (variable.type === "undefined") {
         this.drawParticle();
       } else if (variable.type === "Array" || variable.type === "ArrayLike") {
